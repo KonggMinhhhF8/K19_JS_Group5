@@ -270,7 +270,10 @@
         <div class="search-bar">
           <input type="text" id="search" onkeyup="searchCustomer()" placeholder="Tìm tên, email hoặc số điện thoại">
         </div>
-        <button class="btn-add" onclick="openModal()">
+
+        <button id="btnAddCustomer"
+                class="btn-add">
+
           <i class="fas fa-user-plus"></i> Thêm khách hàng
         </button>
       </header>
@@ -310,71 +313,7 @@
               <th>Thao tác</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>
-                <div class="cust-info">
-                  <div class="avatar" style="background: #ebf5fb; color: #3498db;">NA</div>
-                  <div>
-                    <strong>Nguyễn Anh</strong><br>
-                    <small>ID: CUST-001</small>
-                  </div>
-                </div>
-              </td>
-              <td>anh.nguyen@email.com<br><small>0912.345.xxx</small></td>
-              <td><span class="tier gold">VÀNG</span></td>
-              <td>25</td>
-              <td><strong>45.200.000đ</strong></td>
-              <td>
-                <button class="btn-action" title="Lịch sử mua hàng"><i class="fas fa-history"></i></button>
-                <button class="btn-action" onclick="editCustomer(this)" title="Sửa">
-                  <i class="fas fa-user-edit"></i>
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="cust-info">
-                  <div class="avatar" style="background: #fdf2e9; color: #e67e22;">TL</div>
-                  <div>
-                    <strong>Trần Lan</strong><br>
-                    <small>ID: CUST-002</small>
-                  </div>
-                </div>
-              </td>
-              <td>lan.tran@email.com<br><small>0988.777.xxx</small></td>
-              <td><span class="tier silver">BẠC</span></td>
-              <td>12</td>
-              <td><strong>18.500.000đ</strong></td>
-              <td>
-                <button class="btn-action" title="Lịch sử mua hàng"><i class="fas fa-history"></i></button>
-                <button class="btn-action" onclick="editCustomer(this)" title="Sửa">
-                  <i class="fas fa-user-edit"></i>
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="cust-info">
-                  <div class="avatar" style="background: #f4f6f7; color: #7f8c8d;">VD</div>
-                  <div>
-                    <strong>Vũ Duy</strong><br>
-                    <small>ID: CUST-003</small>
-                  </div>
-                </div>
-              </td>
-              <td>duy.vu@email.com<br><small>0355.999.xxx</small></td>
-              <td><span class="tier bronze">ĐỒNG</span></td>
-              <td>3</td>
-              <td><strong>2.100.000đ</strong></td>
-              <td>
-                <button class="btn-action" title="Lịch sử mua hàng"><i class="fas fa-history"></i></button>
-                <button class="btn-action" onclick="editCustomer(this)" title="Sửa">
-                  <i class="fas fa-user-edit"></i>
-                </button>
-              </td>
-            </tr>
-          </tbody>
+          <tbody id="customerTable"></tbody>
         </table>
       </section>
     </main>
@@ -394,140 +333,15 @@
         <option value="silver">Bạc</option>
         <option value="bronze">Đồng</option>
       </select>
-      <button onclick="addCustomer()" style="margin-top:10px;">Lưu</button>
+
+
+      <button id="btnSaveCustomer">Lưu</button>
       <button onclick="closeModal()">Hủy</button>
     </div>
   </div>
 
 
-
-
-  <script>
-    function openModal() {
-      document.getElementById('modal').style.display = 'flex'
-    }
-
-    function closeModal() {
-      document.getElementById('modal').style.display = 'none'
-    }
-
-    function addCustomer() {
-      const name = document.getElementById('name').value
-      const email = document.getElementById('email').value
-      const phone = document.getElementById('phone').value
-      const tier = document.getElementById('tier').value
-
-      if (!name || !email || !phone) {
-        alert("Vui lòng nhập đầy đủ")
-        return
-      }
-
-      const initials = name.split(' ').map(w => w[0]).join('').toUpperCase()
-
-      const tierText = {
-        gold: 'VÀNG',
-        silver: 'BẠC',
-        bronze: 'ĐỒNG'
-      }
-
-
-      if (editRow) {
-        editRow.innerHTML = `
-      <td>
-        <div class="cust-info">
-          <div class="avatar">${initials}</div>
-          <div>
-            <strong>${name}</strong><br>
-            <small>ID: ${editRow.querySelector('small').innerText}</small>
-          </div>
-        </div>
-      </td>
-      <td>${email}<br><small>${phone}</small></td>
-      <td><span class="tier ${tier}">${tierText[tier]}</span></td>
-      <td>${editRow.children[3].innerText}</td>
-      <td><strong>${editRow.children[4].innerText}</strong></td>
-      <td>
-        <button class="btn-action"><i class="fas fa-history"></i></button>
-        <button class="btn-action" onclick="editCustomer(this)">
-          <i class="fas fa-user-edit"></i>
-        </button>
-      </td>
-    `
-        editRow = null
-      } else {
-        const table = document.querySelector('tbody')
-
-        const row = `
-      <tr>
-        <td>
-          <div class="cust-info">
-            <div class="avatar">${initials}</div>
-            <div>
-              <strong>${name}</strong><br>
-              <small>ID: CUST-${Math.floor(Math.random() * 1000)}</small>
-            </div>
-          </div>
-        </td>
-        <td>${email}<br><small>${phone}</small></td>
-        <td><span class="tier ${tier}">${tierText[tier]}</span></td>
-        <td>0</td>
-        <td><strong>0đ</strong></td>
-        <td>
-          <button class="btn-action"><i class="fas fa-history"></i></button>
-          <button class="btn-action" onclick="editCustomer(this)">
-            <i class="fas fa-user-edit"></i>
-          </button>
-        </td>
-      </tr>
-    `
-        table.innerHTML += row
-      }
-
-      closeModal()
-    }
-
-
-
-
-
-    let editRow = null
-    function editCustomer(btn) {
-      editRow = btn.closest('tr')
-
-      const name = editRow.querySelector('strong').innerText
-      const email = editRow.children[1].childNodes[0].textContent.trim()
-      const phone = editRow.children[1].querySelector('small').innerText
-      const tier = editRow.querySelector('.tier').classList[1]
-
-      document.getElementById('name').value = name
-      document.getElementById('email').value = email
-      document.getElementById('phone').value = phone
-      document.getElementById('tier').value = tier
-      openModal()
-    }
-
-
-    function searchCustomer() {
-      const keyword = document.getElementById('search').value.toLowerCase()
-      const rows = document.querySelectorAll('tbody tr')
-
-      rows.forEach(row => {
-        const text = row.innerText.toLowerCase()
-        row.style.display = text.includes(keyword) ? '' : 'none'
-      })
-    }
-
-
-
-
-
-  </script>
-
-
-
-
-
-
+<script src="main.js"></script>
 </body>
 
 </html>
