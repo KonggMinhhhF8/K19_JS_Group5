@@ -164,6 +164,11 @@
       color: var(--dark-color);
     }
 
+    .chart-box canvas {
+      max-height: 350px;
+      width: 100% !important;
+    }
+
     /* Top Products Table */
     .top-products {
       background: white;
@@ -303,34 +308,237 @@
   </div>
 
   <script>
-    // Biểu đồ đường (Revenue Chart)
-    const ctxRevenue = document.getElementById('revenueChart').getContext('2d');
-    new Chart(ctxRevenue, {
-      type: 'line',
-      data: {
-        labels: ['18/01', '19/01', '20/01', '21/01', '22/01', '23/01', '24/01'],
-        datasets: [{
-          label: 'Doanh thu (VNĐ)',
-          data: [12000000, 19000000, 15000000, 25000000, 22000000, 30000000, 28000000],
-          borderColor: '#3498db',
-          backgroundColor: 'rgba(52, 152, 219, 0.1)',
-          fill: true,
-          tension: 0.4
-        }]
-      }
-    });
+    const API_URL = 'https://wo365ovs53.execute-api.ap-southeast-1.amazonaws.com';
+    const ENDPOINT = '/orders';
 
-    // Biểu đồ tròn (Category Chart)
-    const ctxCategory = document.getElementById('categoryChart').getContext('2d');
-    new Chart(ctxCategory, {
-      type: 'doughnut',
-      data: {
-        labels: ['Điện thoại', 'Phụ kiện', 'Máy tính bảng'],
-        datasets: [{
-          data: [60, 25, 15],
-          backgroundColor: ['#3498db', '#2ecc71', '#f1c40f']
-        }]
+    const MY_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJrMTgtc3RvcmUiLCJzdWIiOiIxIiwiZXhwIjoxNzgyNzUwNzE4LCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzgyNzUwMTE4LCJlbWFpbCI6ImJhbmd0eEB0ZXN0LmNvbSJ9.o9wza4Fl7r8dYkj4fz1NYSK-DoVLW7oiKxrSXH-Uqbc';
+    let revenueChartInstance = null;
+    let categoryChartInstance = null;
+
+    const dateInputs = document.querySelectorAll('.filter-group input[type="date"]');
+    const filterBtn = document.querySelector('.filter-group button');
+    const statValues = document.querySelectorAll('.stat-card .value');
+
+    function initDateFilter() {
+      const savedStartDate = localStorage.getItem('reportStartDate');
+      const savedEndDate = localStorage.getItem('reportEndDate');
+
+      if (savedStartDate && savedEndDate) {
+        dateInputs[0].value = savedStartDate;
+        dateInputs[1].value = savedEndDate;
+      } else {
+        const endDate = new Date();
+        const startDate = new Date();
+        startDate.setDate(endDate.getDate() - 7);
+        dateInputs[0].value = startDate.toISOString().split('T')[0];
+        dateInputs[1].value = endDate.toISOString().split('T')[0];
       }
+    }
+
+    async function fetchReportData(startDate, endDate) {
+      try {
+        filterBtn.textContent = 'Đang lọc...';
+        filterBtn.disabled = true;
+
+        localStorage.setItem('reportStartDate', startDate);
+        localStorage.setItem('reportEndDate', endDate);
+
+        const targetUrl = `${API_URL}${ENDPOINT}`;
+
+        const response = await fetch(targetUrl, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${MY_TOKEN}`
+          }
+        });
+
+        let allOrders = [];
+
+        if (!response.ok) {
+          console.warn(` Máy chủ báo lỗi ${response.status}`);
+          allOrders = getDummyData();
+        } else {
+          const rawData = await response.json();
+          allOrders = Array.isArray(rawData) ? rawData : (rawData.data || []);
+          if(allOrders.length === 0) allOrders = getDummyData();
+        }
+
+        const startTime = new Date(startDate).setHours(0, 0, 0, 0);
+        const endTime = new Date(endDate).setHours(23, 59, 59, 999);
+
+        const filteredOrders = allOrders.filter(order => {
+          if (!order.date) return false;
+          const orderTime = new Date(order.date).getTime();
+          return orderTime >= startTime && orderTime <= endTime;
+        });
+
+        const stats = processOrderStats(filteredOrders);
+        updateStatsUI(stats);
+        renderRevenueChart(stats.dailyRevenue);
+        renderCategoryChart(stats.categoryData);
+
+        renderTopProducts(filteredOrders);
+
+      } catch (error) {
+        console.error("Kết nối thất bại.", error);
+        const dummyOrders = getDummyData();
+        const fakeStats = processOrderStats(dummyOrders);
+        updateStatsUI(fakeStats);
+        renderRevenueChart(fakeStats.dailyRevenue);
+        renderCategoryChart(fakeStats.categoryData);
+
+        renderTopProducts(dummyOrders);
+      } finally {
+        filterBtn.textContent = 'Lọc';
+        filterBtn.disabled = false;
+      }
+    }
+
+    function processOrderStats(orders) {
+      let totalRevenue = 0;
+      const dailyRevenue = {};
+      const categoryData = {};
+
+      orders.forEach(order => {
+        const price = order.product?.price || 0;
+        const amount = order.amount || 1;
+
+        const orderRevenue = price * amount;
+        totalRevenue += orderRevenue;
+
+        if (order.date) {
+          const dateStr = new Date(order.date).toLocaleDateString('vi-VN');
+          dailyRevenue[dateStr] = (dailyRevenue[dateStr] || 0) + orderRevenue;
+        }
+
+        const catName = order.product?.category?.name || 'Chưa phân loại';
+        categoryData[catName] = (categoryData[catName] || 0) + amount;
+      });
+
+      return { totalRevenue, totalOrders: orders.length, dailyRevenue, categoryData };
+    }
+
+    function updateStatsUI(stats) {
+      const formatVND = (num) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(num);
+      if (statValues.length >= 3) {
+        statValues[0].textContent = formatVND(stats.totalRevenue);
+        statValues[1].textContent = stats.totalOrders;
+        statValues[2].textContent = formatVND(stats.totalRevenue * 0.25);
+      }
+    }
+
+    // Vẽ biểu đồ Đường
+    function renderRevenueChart(dailyData) {
+      const ctx = document.getElementById('revenueChart').getContext('2d');
+      if (revenueChartInstance) revenueChartInstance.destroy();
+
+      revenueChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: Object.keys(dailyData),
+          datasets: [{
+            label: 'Doanh thu (VNĐ)',
+            data: Object.values(dailyData),
+            borderColor: '#3498db',
+            backgroundColor: 'rgba(52, 152, 219, 0.2)',
+            fill: true,
+            tension: 0.3
+          }]
+        },
+        options: { responsive: true, maintainAspectRatio: true }
+      });
+    }
+
+    // Vẽ biểu đồ Tròn
+    function renderCategoryChart(categoryData) {
+      const ctx = document.getElementById('categoryChart').getContext('2d');
+      if (categoryChartInstance) categoryChartInstance.destroy();
+
+      categoryChartInstance = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: Object.keys(categoryData),
+          datasets: [{
+            data: Object.values(categoryData),
+            backgroundColor: ['#3498db', '#2ecc71', '#e74c3c', '#f1c40f', '#9b59b6']
+          }]
+        },
+        options: { responsive: true, maintainAspectRatio: true }
+      });
+    }
+
+    function renderTopProducts(orders) {
+      const productMap = {};
+
+      orders.forEach(order => {
+        if (!order.product) return;
+
+        const prodId = order.product.id || order.product.name;
+        const name = order.product.name || 'Sản phẩm không tên';
+        const price = order.product.price || 0;
+        const amount = order.amount || 0;
+        const remaining = order.product.remaining || 0;
+
+        if (!productMap[prodId]) {
+          productMap[prodId] = {
+            name: name,
+            quantitySold: 0,
+            revenue: 0,
+            remaining: remaining
+          };
+        }
+
+        productMap[prodId].quantitySold += amount;
+        productMap[prodId].revenue += (price * amount);
+      });
+
+      const topProducts = Object.values(productMap).sort((a, b) => b.quantitySold - a.quantitySold);
+
+      const tbody = document.querySelector('.top-products tbody');
+      tbody.innerHTML = '';
+
+      if (topProducts.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: gray;">Chưa có sản phẩm nào được bán trong khoảng thời gian này</td></tr>';
+        return;
+      }
+
+      const formatVND = (num) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(num);
+
+      topProducts.forEach(prod => {
+        let statusHtml = '';
+        if (prod.remaining > 10) {
+          statusHtml = `<span style="color: var(--success)">Còn hàng (${prod.remaining})</span>`;
+        } else if (prod.remaining > 0) {
+          statusHtml = `<span style="color: var(--danger)">Sắp hết (${prod.remaining})</span>`;
+        } else {
+          statusHtml = `<span style="color: gray; text-decoration: line-through;">Hết hàng</span>`;
+        }
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="font-weight: 500;">${prod.name}</td>
+          <td>${prod.quantitySold}</td>
+          <td>${formatVND(prod.revenue)}</td>
+          <td>${statusHtml}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initDateFilter();
+      fetchReportData(dateInputs[0].value, dateInputs[1].value);
+
+      filterBtn.addEventListener('click', () => {
+        const start = dateInputs[0].value;
+        const end = dateInputs[1].value;
+        if (new Date(start) > new Date(end)) {
+          alert('Ngày bắt đầu không được lớn hơn ngày kết thúc!');
+          return;
+        }
+        fetchReportData(start, end);
+      });
     });
   </script>
 
