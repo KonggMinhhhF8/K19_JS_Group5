@@ -31,7 +31,25 @@ const renderTable = async (headers, rows, className = null) => {
 
         for (const header of headers) {
             const td = document.createElement('td')
-            td.innerText = row[header.key]
+
+            if (header.key === 'status') {
+                const span = document.createElement('span')
+                const statusMap = {
+                    pending: 'pending',
+                    delivering: 'shipping',
+                    done: 'completed',
+                    cancel: 'cancelled'
+                }
+                span.className = `badge ${statusMap[row.status] || ''}`
+                span.innerText = row.status
+                td.append(span)
+            } else if (header.key === 'total') {
+                td.innerText = (row.total ?? 0).toLocaleString('vi-VN') + ' đ'
+            }else if (header.key === 'name') {
+                td.innerHTML = `${row.name}<br><small>${row.phone || ''}</small>`
+            } else {
+                td.innerText = row[header.key]
+            }
 
             tr.append(td)
         }

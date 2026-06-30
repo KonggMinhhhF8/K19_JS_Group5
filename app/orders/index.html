@@ -271,6 +271,127 @@
       /* Giúp người dùng bấm vào toàn bộ vùng của li chứ không chỉ mỗi chữ */
       width: 100%;
     }
+
+    #modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+#modal-toggle:checked ~ #modal-overlay {
+  display: flex;
+}
+
+#modal {
+  background: white;
+  border-radius: 14px;
+  width: 600px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  border-bottom: 1px solid #eee;
+}
+
+.modal-header h3 {
+  font-size: 1.1rem;
+  color: var(--dark-color);
+}
+
+.modal-close {
+  font-size: 1.5rem;
+  color: #aaa;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.modal-close:hover {
+  color: #e74c3c;
+}
+
+.modal-body {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #555;
+}
+
+.form-group input {
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.form-group input:focus {
+  border-color: var(--primary-color);
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 25px;
+  border-top: 1px solid #eee;
+}
+
+.btn-cancel {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: white;
+  color: #555;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.btn-cancel:hover {
+  background: #f4f4f4;
+}
+
+.btn-save {
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: none;
+  background: var(--primary-color);
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.btn-save:hover {
+  background: #2980b9;
+}
   </style>
 </head>
 
@@ -338,67 +459,69 @@
           </div>
         </div>
 
-        <table>
-          <thead>
-            <tr>
-              <th>Mã đơn</th>
-              <th>Khách hàng</th>
-              <th>Sản phẩm</th>
-              <th>Tổng tiền</th>
-              <th>Trạng thái</th>
-              <th>Thao tác</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>#ORD-7721</strong></td>
-              <td>Nguyễn Văn An<br><small>0912.345.xxx</small></td>
-              <td>iPhone 15 Pro Max (x1)</td>
-              <td>32.500.000đ</td>
-              <td><span class="badge shipping">Đang giao</span></td>
-              <td>
-                <button class="btn-action" title="Xem chi tiết"><i class="fas fa-eye"></i></button>
-                <button class="btn-action" title="In hóa đơn"><i class="fas fa-print"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td><strong>#ORD-7722</strong></td>
-              <td>Lê Thị Bình<br><small>0988.777.xxx</small></td>
-              <td>AirPods Pro (x2), Case (x2)</td>
-              <td>11.200.000đ</td>
-              <td><span class="badge completed">Hoàn thành</span></td>
-              <td>
-                <button class="btn-action" title="Xem chi tiết"><i class="fas fa-eye"></i></button>
-                <button class="btn-action" title="In hóa đơn"><i class="fas fa-print"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td><strong>#ORD-7723</strong></td>
-              <td>Phạm Minh Cường<br><small>0355.123.xxx</small></td>
-              <td>Ốp lưng Silicon</td>
-              <td>250.000đ</td>
-              <td><span class="badge pending">Chờ xử lý</span></td>
-              <td>
-                <button class="btn-action" title="Xử lý"><i class="fas fa-check"></i></button>
-                <button class="btn-action" title="Hủy đơn"><i class="fas fa-times"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td><strong>#ORD-7724</strong></td>
-              <td>Hoàng Anh Tuấn<br><small>0909.888.xxx</small></td>
-              <td>Sạc nhanh 20W</td>
-              <td>490.000đ</td>
-              <td><span class="badge cancelled">Đã hủy</span></td>
-              <td>
-                <button class="btn-action" title="Xem chi tiết"><i class="fas fa-eye"></i></button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+<!--        <table>-->
+<!--          <thead>-->
+<!--            <tr>-->
+<!--              <th>Mã đơn</th>-->
+<!--              <th>Khách hàng</th>-->
+<!--              <th>Sản phẩm</th>-->
+<!--              <th>Tổng tiền</th>-->
+<!--              <th>Trạng thái</th>-->
+<!--              <th>Thao tác</th>-->
+<!--            </tr>-->
+<!--          </thead>-->
+<!--          <tbody>-->
+<!--            <tr>-->
+<!--              <td><strong>#ORD-7721</strong></td>-->
+<!--              <td>Nguyễn Văn An<br><small>0912.345.xxx</small></td>-->
+<!--              <td>iPhone 15 Pro Max (x1)</td>-->
+<!--              <td>32.500.000đ</td>-->
+<!--              <td><span class="badge shipping">Đang giao</span></td>-->
+<!--              <td>-->
+<!--                <button class="btn-action" title="Xem chi tiết"><i class="fas fa-eye"></i></button>-->
+<!--                <button class="btn-action" title="In hóa đơn"><i class="fas fa-print"></i></button>-->
+<!--              </td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--              <td><strong>#ORD-7722</strong></td>-->
+<!--              <td>Lê Thị Bình<br><small>0988.777.xxx</small></td>-->
+<!--              <td>AirPods Pro (x2), Case (x2)</td>-->
+<!--              <td>11.200.000đ</td>-->
+<!--              <td><span class="badge completed">Hoàn thành</span></td>-->
+<!--              <td>-->
+<!--                <button class="btn-action" title="Xem chi tiết"><i class="fas fa-eye"></i></button>-->
+<!--                <button class="btn-action" title="In hóa đơn"><i class="fas fa-print"></i></button>-->
+<!--              </td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--              <td><strong>#ORD-7723</strong></td>-->
+<!--              <td>Phạm Minh Cường<br><small>0355.123.xxx</small></td>-->
+<!--              <td>Ốp lưng Silicon</td>-->
+<!--              <td>250.000đ</td>-->
+<!--              <td><span class="badge pending">Chờ xử lý</span></td>-->
+<!--              <td>-->
+<!--                <button class="btn-action" title="Xử lý"><i class="fas fa-check"></i></button>-->
+<!--                <button class="btn-action" title="Hủy đơn"><i class="fas fa-times"></i></button>-->
+<!--              </td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--              <td><strong>#ORD-7724</strong></td>-->
+<!--              <td>Hoàng Anh Tuấn<br><small>0909.888.xxx</small></td>-->
+<!--              <td>Sạc nhanh 20W</td>-->
+<!--              <td>490.000đ</td>-->
+<!--              <td><span class="badge cancelled">Đã hủy</span></td>-->
+<!--              <td>-->
+<!--                <button class="btn-action" title="Xem chi tiết"><i class="fas fa-eye"></i></button>-->
+<!--              </td>-->
+<!--            </tr>-->
+<!--          </tbody>-->
+<!--        </table>-->
       </section>
+      <div id="table-wrapper" class="table-container"></div>
     </main>
   </div>
-
+  <input type="checkbox" id="modal-toggle" style="display:none">
+<script src="main.js" type="module"></script>
 </body>
 
 </html>
