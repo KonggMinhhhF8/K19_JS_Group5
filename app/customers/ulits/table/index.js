@@ -1,9 +1,9 @@
-import { addressInput, mailInput, nameInput, phoneInput, saveBtn, taxInput } from "../edit/edit.js"
-import { put, post, del } from "../api/api.js"
+import { addressInput, mailInput, nameInput, phoneInput, saveBtn } from "../edit"
+import { get, put, post, del } from "../api"
 
 const renderTable = async (headers, rows, className = null) => {
 
-    const div = document.createElement('div');
+    const div = document.getElementById('table-wrapper');
 
     if (className) {
         div.className = className;
@@ -36,42 +36,42 @@ const renderTable = async (headers, rows, className = null) => {
             tr.append(td)
         }
 
-         const action = document.createElement('td');
-        action.setAttribute('style', 'display:flex; gap:10px')
+        const action = document.createElement('td');
+
+        const actionWrapper = document.createElement('div');
+        actionWrapper.setAttribute('style', 'display:flex; gap:10px');
 
         const editBtn = document.createElement('span');
-        editBtn.setAttribute('style', '')
         editBtn.title = 'Edit';
         editBtn.innerText = '✏️';
+        editBtn.style.cursor = 'pointer';
 
             editBtn.addEventListener('click', () => {
-                document.querySelector('#modal').checked = true;
+                document.querySelector('#modal-toggle').checked = true;
                 saveBtn.dataset.id = row.id;
 
-                nameInput.value = row.companyName;
+                nameInput.value = row.name;
                 mailInput.value = row.email;
                 phoneInput.value = row.phone;
                 addressInput.value = row.address;
-                taxInput.value = row.taxId;
 
                 saveBtn.onclick = async () => {
                     const id = saveBtn.dataset.id;
                     const data = {
-                        companyName: nameInput.value,
+                        name: nameInput.value,
                         email: mailInput.value,
                         phone: phoneInput.value,
                         address: addressInput.value,
-                        taxId: taxInput.value,
                     };
 
                     try {
                         if (id) {
-                            await put(`customers/${id}`, data);
+                            await put(`${id}`, data);
                         } else {
-                            await post('customers', {...data, status: 'Active'});
+                            await post('', {...data, status: 'Active'});
                         }
 
-                        document.querySelector('#popup-toggle').checked = false;
+                        document.querySelector('#modal-toggle').checked = false;
                         location.reload();
                     } catch (error) {
                         console.log(error);
@@ -90,14 +90,15 @@ const renderTable = async (headers, rows, className = null) => {
                 if (!confirm) return;
 
                 try {
-                    await del(`customers/${row.id}`);
+                    await del(`${row.id}`);
 
                     location.reload();
                 } catch (error) {
                     console.log(error);
                 }
             });
-            action.append(editBtn, deleteBtn);
+            actionWrapper.append(editBtn, deleteBtn);
+            action.append(actionWrapper)
             tr.append(action);
         tbody.append(tr)
 

@@ -1,4 +1,4 @@
-export * from './table/table.js'
+export * from './table'
 export * from './const/customer.js'
-export * from './edit/edit.js'
-export * from './api/api.js'
+export * from './edit'
+export * from './api'
