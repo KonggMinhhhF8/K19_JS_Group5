@@ -72,7 +72,31 @@ addressInput.setAttribute('placeholder', 'HN, VN...')
 
 addressGroup.append(addressLabel, addressInput)
 
-modalBody.append(nameGroup, mailGroup, addressGroup, tellGroup)
+const rankGroup = document.createElement('div')
+rankGroup.className = 'form-group'
+
+const rankLabel = document.createElement('label')
+rankLabel.innerText = 'Hạng'
+
+const rankStatus = document.createElement('select')
+rankStatus.id = 'rank-status'
+
+const rankOptions = [
+    { value: 'GOLD', text: 'GOLD' },
+    { value: 'SILVER', text: 'SILVER' },
+    { value: 'BRONZE', text: 'BRONZE' }
+]
+
+rankOptions.forEach(status => {
+    const option = document.createElement('option')
+    option.value = status.value
+    option.innerText = status.text
+    rankStatus.append(option)
+})
+
+rankGroup.append(rankLabel, rankStatus)
+
+modalBody.append(nameGroup, mailGroup, addressGroup, tellGroup, rankGroup)
 
 const modalFooter = document.createElement('div')
 modalFooter.className = 'modal-footer'
@@ -102,7 +126,8 @@ export const resetForm = () => {
     mailInput.value = '';
     phoneInput.value = '';
     addressInput.value = '';
+    rankStatus.value = '';
     saveBtn.dataset.id = '';
 }
 
-export {overlay, nameInput, mailInput, phoneInput, addressInput, saveBtn}
+export {overlay, nameInput, mailInput, phoneInput, addressInput, saveBtn, rankStatus}

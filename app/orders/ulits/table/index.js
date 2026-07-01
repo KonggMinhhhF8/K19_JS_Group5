@@ -1,4 +1,4 @@
-import { addressInput, mailInput, nameInput, phoneInput, saveBtn } from "../edit"
+import { orderDateInput, priceInput, amountInput, orderStatus, saveBtn } from "../edit"
 import { get, put, post, del } from "../api"
 
 const renderTable = async (headers, rows, className = null) => {
@@ -45,7 +45,9 @@ const renderTable = async (headers, rows, className = null) => {
                 td.append(span)
             } else if (header.key === 'total') {
                 td.innerText = (row.total ?? 0).toLocaleString('vi-VN') + ' đ'
-            }else if (header.key === 'name') {
+            } else if (header.key === 'price') {
+                td.innerText = (row.price ?? 0).toLocaleString('vi-VN') + ' đ'
+            } else if (header.key === 'name') {
                 td.innerHTML = `${row.name}<br><small>${row.phone || ''}</small>`
             } else {
                 td.innerText = row[header.key]
@@ -67,24 +69,33 @@ const renderTable = async (headers, rows, className = null) => {
             editBtn.addEventListener('click', () => {
                 document.querySelector('#modal-toggle').checked = true;
                 saveBtn.dataset.id = row.id;
+                saveBtn.dataset.customerId = row.customerId;
+                saveBtn.dataset.productId = row.productId;
 
-                nameInput.value = row.name;
-                mailInput.value = row.email;
-                phoneInput.value = row.phone;
-                addressInput.value = row.address;
+                // idInput.value = row.id;
+                priceInput.value = row.price;
+                amountInput.value = row.amount;
+                orderDateInput.value = row.date;
+                // proInput.value = row.productName;
+                // orderTotalInput.value = row.total;
+                orderStatus.value = row.status;
 
                 saveBtn.onclick = async () => {
                     const id = saveBtn.dataset.id;
                     const data = {
-                        name: nameInput.value,
-                        email: mailInput.value,
-                        phone: phoneInput.value,
-                        address: addressInput.value,
+                        customerId: Number(saveBtn.dataset.customerId),
+                        productId: Number(saveBtn.dataset.productId),
+                        date: orderDateInput.value,
+                        // price: priceInput.value,
+                        amount: Number(amountInput.value),
+                        status: orderStatus.value,
                     };
+                    console.log(data)
 
                     try {
                         if (id) {
-                            await put(`${id}`, data);
+                            const result = await put(`${id}`, data);
+                            console.log( result)
                         } else {
                             await post('', {...data, status: 'Active'});
                         }
@@ -112,7 +123,7 @@ const renderTable = async (headers, rows, className = null) => {
 
                     location.reload();
                 } catch (error) {
-                    console.log(error);
+                    console.log('Lỗi khi lưu', error);
                 }
             });
             actionWrapper.append(editBtn, deleteBtn);

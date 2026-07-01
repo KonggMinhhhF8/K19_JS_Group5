@@ -1,26 +1,15 @@
-import { headers, renderTable, overlay, saveBtn, API_URL, TOKEN } from './ulits'
-
-const getOrders = async () => {
-  try {
-    const response = await fetch(API_URL, {
-      headers: {
-        'Authorization': `Bearer ${TOKEN}`
-      }
-    })
-    const data = await response.json()
-      console.log('API response:', data)
-    return data
-  } catch (error) {
-    console.error('Failed to get orders:', error)
-    return ['get orders failed']
-  }
-}
+import { headers, renderTable, get } from './ulits/index.js'
 
 const init = async () => {
-    const orders = await getOrders()
+    const orders = await get('')
+    console.log(orders)
   
     const rows = orders.map(order => ({
         id: order.id,
+        customerId: order.customer?.id,
+        productId: order.product?.id,
+        price: order.product?.price,
+        amount: order.amount,
         name: order.customer?.name,
         phone: order.customer?.phone,
         status: order.status,

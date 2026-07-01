@@ -1,5 +1,5 @@
-import { addressInput, mailInput, nameInput, phoneInput, saveBtn } from "../edit"
-import { get, put, post, del } from "../api"
+import {addressInput, mailInput, nameInput, phoneInput, saveBtn, rankStatus} from "../edit"
+import { put, post, del} from "../api"
 
 const renderTable = async (headers, rows, className = null) => {
 
@@ -31,11 +31,23 @@ const renderTable = async (headers, rows, className = null) => {
 
         for (const header of headers) {
             const td = document.createElement('td')
-            td.innerText = row[header.key]
+
+            if (header.key === 'rank') {
+                const span = document.createElement('span')
+                const rankMap = {
+                    GOLD: 'gold',
+                    SILVER: 'silver',
+                    BRONZE: 'bronze'
+                }
+                span.className = `tier ${rankMap[row.rank] || ''}`
+                span.innerText = row.rank
+                td.append(span)
+            } else {
+                td.innerText = row[header.key]
+            }
 
             tr.append(td)
         }
-
         const action = document.createElement('td');
 
         const actionWrapper = document.createElement('div');
@@ -46,60 +58,62 @@ const renderTable = async (headers, rows, className = null) => {
         editBtn.innerText = '✏️';
         editBtn.style.cursor = 'pointer';
 
-            editBtn.addEventListener('click', () => {
-                document.querySelector('#modal-toggle').checked = true;
-                saveBtn.dataset.id = row.id;
+        editBtn.addEventListener('click', () => {
+            document.querySelector('#modal-toggle').checked = true;
+            saveBtn.dataset.id = row.id;
 
-                nameInput.value = row.name;
-                mailInput.value = row.email;
-                phoneInput.value = row.phone;
-                addressInput.value = row.address;
+            nameInput.value = row.name;
+            mailInput.value = row.email;
+            phoneInput.value = row.phone;
+            addressInput.value = row.address;
+            rankStatus.value = row.rank;
 
-                saveBtn.onclick = async () => {
-                    const id = saveBtn.dataset.id;
-                    const data = {
-                        name: nameInput.value,
-                        email: mailInput.value,
-                        phone: phoneInput.value,
-                        address: addressInput.value,
-                    };
-
-                    try {
-                        if (id) {
-                            await put(`${id}`, data);
-                        } else {
-                            await post('', {...data, status: 'Active'});
-                        }
-
-                        document.querySelector('#modal-toggle').checked = false;
-                        location.reload();
-                    } catch (error) {
-                        console.log(error);
-                    }
+            saveBtn.onclick = async () => {
+                const id = saveBtn.dataset.id;
+                const data = {
+                    name: nameInput.value,
+                    email: mailInput.value,
+                    phone: phoneInput.value,
+                    address: addressInput.value,
+                    rank: rankStatus.value,
                 };
-            });
-
-            const deleteBtn = document.createElement('span');
-            deleteBtn.className = 'action-icon delete';
-            deleteBtn.title = 'Delete';
-            deleteBtn.innerText = '🗑️';
-            deleteBtn.style.cursor = 'pointer';
-
-            deleteBtn.addEventListener('click', async () => {
-                const confirm = window.confirm(`Bạn có chắc muốn xóa "${row.name}" không?`);
-                if (!confirm) return;
 
                 try {
-                    await del(`${row.id}`);
+                    if (id) {
+                        await put(`${id}`, data);
+                    } else {
+                        await post('', {...data, status: 'Active'});
+                    }
 
+                    document.querySelector('#modal-toggle').checked = false;
                     location.reload();
                 } catch (error) {
                     console.log(error);
                 }
-            });
-            actionWrapper.append(editBtn, deleteBtn);
-            action.append(actionWrapper)
-            tr.append(action);
+            };
+        });
+
+        const deleteBtn = document.createElement('span');
+        deleteBtn.className = 'action-icon delete';
+        deleteBtn.title = 'Delete';
+        deleteBtn.innerText = '🗑️';
+        deleteBtn.style.cursor = 'pointer';
+
+        deleteBtn.addEventListener('click', async () => {
+            const confirm = window.confirm(`Bạn có chắc muốn xóa "${row.name}" không?`);
+            if (!confirm) return;
+
+            try {
+                await del(`${row.id}`);
+
+                location.reload();
+            } catch (error) {
+                console.log(error);
+            }
+        });
+        actionWrapper.append(editBtn, deleteBtn);
+        action.append(actionWrapper)
+        tr.append(action);
         tbody.append(tr)
 
     }

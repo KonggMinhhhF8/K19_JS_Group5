@@ -1,5 +1,5 @@
-const API_URL = "https://corsproxy.io/?https://wo365ovs53.execute-api.ap-southeast-1.amazonaws.com/orders"
-const TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJrMTgtc3RvcmUiLCJzdWIiOiIxIiwiZXhwIjoxNzgyODAwMjA2LCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzgyNzk5NjA2LCJlbWFpbCI6ImJhbmd0eEB0ZXN0LmNvbSJ9.39T9UF6PML-WdBDQtpAwH-QhEUUbjwpv6Il7vnQHQxg'
+const API_URL = "https://wo365ovs53.execute-api.ap-southeast-1.amazonaws.com/orders"
+const TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJrMTgtc3RvcmUiLCJzdWIiOiIxIiwiZXhwIjoxNzgyOTA0NDI4LCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzgyOTAzODI4LCJlbWFpbCI6ImJhbmd0eEB0ZXN0LmNvbSJ9.pP5wLi-2aKe5JxsjhMtKzZY5Tx5-WliaZlGrzLMHk_A'
 
 const post = async (endpoint, body) => {
     try {

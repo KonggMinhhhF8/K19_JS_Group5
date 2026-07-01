@@ -20,6 +20,14 @@ const headers = [
         text: 'Sản phẩm'
     },
     {
+        key: 'price',
+        text: 'Đơn giá'
+    },
+    {
+        key: 'amount',
+        text: 'Số lượng'
+    },
+    {
         key: 'total',
         text: 'Tổng tiền'
     },
