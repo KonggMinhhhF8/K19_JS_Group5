@@ -1,4 +1,4 @@
-import { headers, renderTable, overlay, saveBtn, API_URL, TOKEN, get } from './ulits'
+import { headers, renderTable, get } from './ulits'
 
 const init = async () => {
     const customers = await get('')

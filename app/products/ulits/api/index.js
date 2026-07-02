@@ -1,4 +1,4 @@
-const BASE_URL = "https://wo365ovs53.execute-api.ap-southeast-1.amazonaws.com/customers"
+const BASE_URL = "https://wo365ovs53.execute-api.ap-southeast-1.amazonaws.com/products"
 const AUTH_URL = "https://wo365ovs53.execute-api.ap-southeast-1.amazonaws.com/auth"
 
 const API_URL = BASE_URL

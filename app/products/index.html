@@ -68,44 +68,48 @@
             </select>
           </div>
         </div>
-        <table>
-          <thead>
-            <tr>
-              <th>Hình</th>
-              <th>Thông tin sản phẩm</th>
-              <th>Danh mục</th>
-              <th>Giá bán</th>
-              <th>Tồn kho</th>
-              <th>Thao tác</th>
-            </tr>
-          </thead>
-          <tbody id="productTableBody">
-            <tr>
-              <td><img src="https://picsum.photos/50" alt="sp" class="img-thumb"></td>
-              <td><strong>iPhone 15 Pro</strong><br><small>SKU: IP15P-01</small></td>
-              <td>Điện thoại</td>
-              <td>28.900.000đ</td>
-              <td>45</td>
-              <td>
-                <button class="btn-icon edit"><i class="fas fa-edit"></i></button>
-                <button class="btn-icon delete"><i class="fas fa-trash"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td><img src="https://picsum.photos/51" alt="sp" class="img-thumb"></td>
-              <td><strong>Tai nghe AirPods Pro</strong><br><small>SKU: AP-02</small></td>
-              <td>Phụ kiện</td>
-              <td>5.500.000đ</td>
-              <td class="stock-low">3 (Cảnh báo)</td>
-              <td>
-                <button class="btn-icon edit"><i class="fas fa-edit"></i></button>
-                <button class="btn-icon delete"><i class="fas fa-trash"></i></button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+<!--        <table>-->
+<!--          <thead>-->
+<!--            <tr>-->
+<!--              <th>Hình</th>-->
+<!--              <th>Thông tin sản phẩm</th>-->
+<!--              <th>Danh mục</th>-->
+<!--              <th>Giá bán</th>-->
+<!--              <th>Tồn kho</th>-->
+<!--              <th>Thao tác</th>-->
+<!--            </tr>-->
+<!--          </thead>-->
+<!--          <tbody id="productTableBody">-->
+<!--            <tr>-->
+<!--              <td><img src="https://picsum.photos/50" alt="sp" class="img-thumb"></td>-->
+<!--              <td><strong>iPhone 15 Pro</strong><br><small>SKU: IP15P-01</small></td>-->
+<!--              <td>Điện thoại</td>-->
+<!--              <td>28.900.000đ</td>-->
+<!--              <td>45</td>-->
+<!--              <td>-->
+<!--                <button class="btn-icon edit"><i class="fas fa-edit"></i></button>-->
+<!--                <button class="btn-icon delete"><i class="fas fa-trash"></i></button>-->
+<!--              </td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--              <td><img src="https://picsum.photos/51" alt="sp" class="img-thumb"></td>-->
+<!--              <td><strong>Tai nghe AirPods Pro</strong><br><small>SKU: AP-02</small></td>-->
+<!--              <td>Phụ kiện</td>-->
+<!--              <td>5.500.000đ</td>-->
+<!--              <td class="stock-low">3 (Cảnh báo)</td>-->
+<!--              <td>-->
+<!--                <button class="btn-icon edit"><i class="fas fa-edit"></i></button>-->
+<!--                <button class="btn-icon delete"><i class="fas fa-trash"></i></button>-->
+<!--              </td>-->
+<!--            </tr>-->
+<!--          </tbody>-->
+<!--        </table>-->
       </section>
+
+      <div id="table-wrapper" class="table-container"></div>
+
     </main>
+
   </div>
 
   <div id="productModal" class="modal">
@@ -122,6 +126,8 @@
       </form>
     </div>
   </div>
+
+<script src="main.js" type="module"></script>
 </body>
 
 </html>

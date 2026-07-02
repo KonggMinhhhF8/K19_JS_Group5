@@ -1,5 +1,5 @@
-import { orderDateInput, priceInput, amountInput, orderStatus, saveBtn } from "../edit"
-import { get, put, post, del } from "../api"
+import { orderDateInput, priceInput, amountInput, orderStatus, saveBtn, idInput, proInput, phoneInput, nameInput } from "../edit"
+import { put, post, del } from "../api"
 
 const renderTable = async (headers, rows, className = null) => {
 
@@ -48,7 +48,7 @@ const renderTable = async (headers, rows, className = null) => {
             } else if (header.key === 'price') {
                 td.innerText = (row.price ?? 0).toLocaleString('vi-VN') + ' đ'
             } else if (header.key === 'name') {
-                td.innerHTML = `${row.name}<br><small>${row.phone || ''}</small>`
+                td.innerHTML = `<b>${row.name}</b><br><small>${row.phone || ''}</small>`
             } else {
                 td.innerText = row[header.key]
             }
@@ -72,12 +72,13 @@ const renderTable = async (headers, rows, className = null) => {
                 saveBtn.dataset.customerId = row.customerId;
                 saveBtn.dataset.productId = row.productId;
 
-                // idInput.value = row.id;
+                idInput.value = row.id;
                 priceInput.value = row.price;
                 amountInput.value = row.amount;
                 orderDateInput.value = row.date;
-                // proInput.value = row.productName;
-                // orderTotalInput.value = row.total;
+                proInput.value = row.productName;
+                phoneInput.value = row.phone;
+                nameInput.value = row.name;
                 orderStatus.value = row.status;
 
                 saveBtn.onclick = async () => {
@@ -86,7 +87,6 @@ const renderTable = async (headers, rows, className = null) => {
                         customerId: Number(saveBtn.dataset.customerId),
                         productId: Number(saveBtn.dataset.productId),
                         date: orderDateInput.value,
-                        // price: priceInput.value,
                         amount: Number(amountInput.value),
                         status: orderStatus.value,
                     };
@@ -119,7 +119,12 @@ const renderTable = async (headers, rows, className = null) => {
                 if (!confirm) return;
 
                 try {
-                    await del(`${row.id}`);
+                    const result = await del(`${row.id}`)
+
+                    if (result?.error || result?.message) {
+                    alert(result.message || 'Không thể xóa sản phẩm này');
+                    return;
+                }
 
                     location.reload();
                 } catch (error) {

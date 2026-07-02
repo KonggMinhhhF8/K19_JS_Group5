@@ -42,6 +42,8 @@ const renderTable = async (headers, rows, className = null) => {
                 span.className = `tier ${rankMap[row.rank] || ''}`
                 span.innerText = row.rank
                 td.append(span)
+            } else if (header.key === 'name') {
+                td.innerHTML = `<b>${row.name}</b>`
             } else {
                 td.innerText = row[header.key]
             }
@@ -104,7 +106,8 @@ const renderTable = async (headers, rows, className = null) => {
             if (!confirm) return;
 
             try {
-                await del(`${row.id}`);
+               const result = await del(`${row.id}`);
+               console.log(result)
 
                 location.reload();
             } catch (error) {

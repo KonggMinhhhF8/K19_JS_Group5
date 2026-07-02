@@ -20,44 +20,50 @@ modalHeader.append(modalTitle, closeLabel)
 const modalBody = document.createElement('div')
 modalBody.className = 'modal-body'
 
-// const idGroup = document.createElement('div')
-// idGroup.className = 'form-group'
-//
-// const idLabel = document.createElement('label')
-// idLabel.innerText = "Mã đơn"
-//
-// const idInput = document.createElement('input')
-// idInput.setAttribute('id', 'id')
-// idInput.setAttribute('type', 'number')
-// idInput.setAttribute('placeholder', 'Nhập mã đơn hàng')
-//
-// idGroup.append(idLabel, idInput)
+const idGroup = document.createElement('div')
+idGroup.className = 'form-group'
 
-// const nameGroup = document.createElement('div')
-// nameGroup.className = 'form-group'
-//
-// const nameLabel = document.createElement('label')
-// nameLabel.innerText = "Tên khách hàng"
-//
-// const nameInput = document.createElement('input')
-// nameInput.setAttribute('id', 'name')
-// nameInput.setAttribute('type', 'text')
-// nameInput.setAttribute('placeholder', 'Nhập tên khách hàng...')
-//
-// nameGroup.append(nameLabel, nameInput)
+const idLabel = document.createElement('label')
+idLabel.innerText = "Mã đơn"
 
-// const tellGroup = document.createElement('div')
-// tellGroup.className = 'form-group'
-//
-// const phoneLabel = document.createElement('label')
-// phoneLabel.innerText = "Số điện thoại"
-//
-// const phoneInput = document.createElement('input')
-// phoneInput.setAttribute('id', 'phone')
-// phoneInput.setAttribute('type', 'tel')
-// phoneInput.setAttribute('placeholder', '0987 654 321')
-//
-// tellGroup.append(phoneLabel, phoneInput)
+const idInput = document.createElement('input')
+idInput.setAttribute('id', 'id')
+idInput.setAttribute('type', 'number')
+idInput.setAttribute('placeholder', 'Nhập mã đơn hàng')
+idInput.setAttribute('readonly', true)
+idInput.setAttribute('style', 'background:#f0f0f0; cursor:not-allowed')
+
+idGroup.append(idLabel, idInput)
+
+const nameGroup = document.createElement('div')
+nameGroup.className = 'form-group'
+
+const nameLabel = document.createElement('label')
+nameLabel.innerText = "Tên khách hàng"
+
+const nameInput = document.createElement('input')
+nameInput.setAttribute('id', 'name')
+nameInput.setAttribute('type', 'text')
+nameInput.setAttribute('placeholder', 'Nhập tên khách hàng...')
+nameInput.setAttribute('readonly', true)
+nameInput.setAttribute('style', 'background:#f0f0f0; cursor:not-allowed')
+
+nameGroup.append(nameLabel, nameInput)
+
+const tellGroup = document.createElement('div')
+tellGroup.className = 'form-group'
+
+const phoneLabel = document.createElement('label')
+phoneLabel.innerText = "Số điện thoại"
+
+const phoneInput = document.createElement('input')
+phoneInput.setAttribute('id', 'phone')
+phoneInput.setAttribute('type', 'tel')
+phoneInput.setAttribute('placeholder', '0987 654 321')
+phoneInput.setAttribute('readonly', true)
+phoneInput.setAttribute('style', 'background:#f0f0f0; cursor:not-allowed')
+
+tellGroup.append(phoneLabel, phoneInput)
 
 const orderDate = document.createElement('div')
 orderDate.className = 'form-group'
@@ -69,23 +75,25 @@ const orderDateInput = document.createElement('input')
 orderDateInput.setAttribute('id', 'order-date')
 orderDateInput.setAttribute('type', 'date')
 orderDateInput.setAttribute('placeholder', '2026-03-03')
-// orderDateInput.setAttribute('readonly', true)
-// orderDateInput.setAttribute('style', 'background:#f0f0f0; cursor:not-allowed')
+orderDateInput.setAttribute('readonly', true)
+orderDateInput.setAttribute('style', 'background:#f0f0f0; cursor:not-allowed')
 
 orderDate.append(orderDateLabel, orderDateInput)
 
-// const proGroup = document.createElement('div')
-// proGroup.className = 'form-group'
-//
-// const proLabel = document.createElement('label')
-// proLabel.innerText = "Sản phẩm"
-//
-// const proInput = document.createElement('input')
-// proInput.setAttribute('id', 'product-name')
-// proInput.setAttribute('type', 'text')
-// proInput.setAttribute('placeholder', 'Iphone 17 pro')
-//
-// proGroup.append(proLabel, proInput)
+const proGroup = document.createElement('div')
+proGroup.className = 'form-group'
+
+const proLabel = document.createElement('label')
+proLabel.innerText = "Sản phẩm"
+
+const proInput = document.createElement('input')
+proInput.setAttribute('id', 'product-name')
+proInput.setAttribute('type', 'text')
+proInput.setAttribute('placeholder', 'Iphone 17 pro')
+proInput.setAttribute('readonly', true)
+proInput.setAttribute('style', 'background:#f0f0f0; cursor:not-allowed')
+
+proGroup.append(proLabel, proInput)
 
 const priceGroup = document.createElement('div')
 priceGroup.className = 'form-group'
@@ -115,19 +123,6 @@ amountInput.setAttribute('placeholder', '3')
 
 amountGroup.append(amountLabel, amountInput)
 
-// const orderTotal = document.createElement('div')
-// orderTotal.className = 'form-group'
-//
-// const orderTotalLabel = document.createElement('label')
-// orderTotalLabel.innerText = "Tổng tiền"
-//
-// const orderTotalInput = document.createElement('input')
-// orderTotalInput.setAttribute('id', 'order-total')
-// orderTotalInput.setAttribute('type', 'number')
-// orderTotalInput.setAttribute('placeholder', '200.000đ')
-//
-// orderTotal.append(orderTotalLabel, orderTotalInput)
-
 const statusGroup = document.createElement('div')
 statusGroup.className = 'form-group'
 
@@ -153,7 +148,7 @@ statusOptions.forEach(status => {
 
 statusGroup.append(statusLabel, orderStatus)
 
-modalBody.append(orderDate, priceGroup, amountGroup, statusGroup)
+modalBody.append(idGroup, nameGroup, tellGroup, proGroup, orderDate, priceGroup, amountGroup, statusGroup)
 
 const modalFooter = document.createElement('div')
 modalFooter.className = 'modal-footer'
@@ -182,10 +177,11 @@ export const resetForm = () => {
     priceInput.value = '';
     amountInput.value = '';
     orderDateInput.value = '';
-    // proInput.value = '';
-    // orderTotalInput.value = '';
+    proInput.value = '';
+    nameInput.value = '';
+    phoneInput.value = '';
     orderStatus.value = '';
     saveBtn.dataset.id = '';
 }
 
-export {overlay, orderDateInput, orderStatus, priceInput, amountInput, saveBtn}
+export {overlay, orderDateInput, phoneInput, nameInput, orderStatus, priceInput, amountInput, saveBtn, idInput, proInput}
