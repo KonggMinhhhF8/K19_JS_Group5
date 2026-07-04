@@ -1,41 +1,34 @@
-import {API_URL,TOKEN} from "../config/api.js";
+import {API_URL,TOKEN} from "../Config/api.js";
 
 const headers = {
-
     "Content-Type":"application/json",
-
     Authorization:`Bearer ${TOKEN}`
-
 };
 
-export async function getCustomers(){
+
+export async function getProducts(){
+
     const response = await fetch(
         API_URL,
         {
             headers
         }
     );
-    return await response.json();
-
+    if(response.ok){
+        return await response.json();
+    }
+    const error = await response.text();
+    throw new Error(error);
 }
 
 
-export async function addCustomer(customer){
-
+export async function addProduct(product){
     const response = await fetch(
-
-        API_URL,
-
-        {
-
+        API_URL, {
             method:"POST",
-
             headers,
-
-            body:JSON.stringify(customer)
-
+            body:JSON.stringify(product)
         }
-
     );
 
     return await response.json();
@@ -44,35 +37,34 @@ export async function addCustomer(customer){
 
 
 
-export async function updateCustomer(id, customer){
-
+export async function updateProduct(id, product){
     const response = await fetch(
         `${API_URL}/${id}`,
         {
             method:"PUT",
             headers,
-            body:JSON.stringify(customer)
+            body:JSON.stringify(product)
         }
     );
+
     return await response.json();
 
 }
 
 
-export async function deleteCustomer(id){
 
-    console.log("Delete ID:",id);
+export async function deleteProduct(id){
     const response = await fetch(
         `${API_URL}/${id}`,
         {
             method:"DELETE",
-            headers:{
-                Authorization:`Bearer ${TOKEN}`
-            }
+            headers
         }
     );
-    console.log(response.status);
-
+    if(!response.ok){
+        const error = await response.text();
+        console.log(error);
+        throw new Error(error);
+    }
+    return true;
 }
-
-
