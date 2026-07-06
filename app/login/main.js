@@ -1,11 +1,11 @@
 import { login } from "./api.js"
 
 const onLogin = async () => {
-    const username = document.querySelector("#email").value
+    const email = document.querySelector("#email").value
     const password = document.querySelector("#password").value
 
-    console.log(username, password)
-    const response = await login(username, password)
+    console.log(email, password)
+    const response = await login(email, password)
 
     const { accessToken, refreshToken } = response
 

@@ -10,8 +10,7 @@ const getNewAccessToken = async () => {
     }
 
     try {
-        const response = await fetch(
-            `${API_URL}/auth/refresh`, {
+        const response = await fetch(`${API_URL}/auth/refresh`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -33,20 +32,22 @@ const getNewAccessToken = async () => {
     }
 }
 
-const login = async (username, password) => {
+const login = async (email, password) => {
     try {
         const response = await fetch(`${API_URL}/auth/signin`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ username, password })
+            body: JSON.stringify({ email, password })
         }
         )
-
-        return await response.json()
-    } catch {
-        await getNewAccessToken()
+        const data = await response.json()
+        console.log(data)
+        return data
+    } catch (error) {
+        // await getNewAccessToken()
+        console.error("Lỗi kết nối mạng:", error);
     }
 }
 
@@ -58,8 +59,7 @@ const post = async (endpoint, body) => {
     }
 
     try {
-        const response = await fetch(
-            `${API_URL}/${endpoint}`, {
+        const response = await fetch(`${API_URL}/${endpoint}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
