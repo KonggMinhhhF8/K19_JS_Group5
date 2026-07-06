@@ -256,7 +256,8 @@
   <div class="overlay" id="overlay"></div>
 
   <div class="container">
-    <aside class="sidebar" id="sidebar">
+    <div id="sidebar-container"></div>
+    <!-- <aside class="sidebar" id="sidebar">
       <h2>ShopAdmin</h2>
       <ul>
         <li class="active">
@@ -275,7 +276,7 @@
           <a href="./reports/index.html"><i class="fas fa-chart-line"></i> Báo cáo</a>
         </li>
       </ul>
-    </aside>
+    </aside> -->
 
     <main class="main-content">
       <header>
@@ -364,19 +365,21 @@
     </main>
   </div>
 
-  <script>
-    const menuToggle = document.getElementById('menuToggle');
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('overlay');
+  <script src="./components/sidebar/sidebar.js">
+    // const menuToggle = document.getElementById('menuToggle');
+    // const sidebar = document.getElementById('sidebar');
+    // const overlay = document.getElementById('overlay');
 
-    function toggleMenu() {
-      sidebar.classList.toggle('active');
-      overlay.classList.toggle('active');
-    }
+    // function toggleMenu() {
+    //   sidebar.classList.toggle('active');
+    //   overlay.classList.toggle('active');
+    // }
 
-    menuToggle.addEventListener('click', toggleMenu);
-    overlay.addEventListener('click', toggleMenu);
+    // menuToggle.addEventListener('click', toggleMenu);
+    // overlay.addEventListener('click', toggleMenu);
+
   </script>
+
 </body>
 
 </html>
