@@ -11,7 +11,8 @@
 
 <body>
   <div class="container">
-    <aside class="sidebar">
+    <div id="sidebar-container"></div>
+    <!-- <aside class="sidebar">
       <h2>ShopAdmin</h2>
       <ul>
         <li class="active">
@@ -30,7 +31,7 @@
           <a href="../reports/index.html"><i class="fas fa-chart-line"></i> Báo cáo</a>
         </li>
       </ul>
-    </aside>
+    </aside> -->
 
     <main class="main-content">
       <header>
@@ -115,10 +116,7 @@
         </select>
         <input id="image" type="text" placeholder="Link ảnh">
         <div class="modal-buttons">
-          <button
-                  type="button"
-                  class="btn-cancel"
-                  onclick="closeModal()">
+          <button type="button" class="btn-cancel" onclick="closeModal()">
 
             Hủy
 
@@ -131,6 +129,8 @@
     </div>
   </div>
   <script type="module" src="./main.js"></script>
+  <script src="/app/components/sidebar/sidebar.js"></script>
+</body>
 </body>
 
 </html>

@@ -30,6 +30,12 @@ body {
     color: white;
     padding: 25px;
     transition: 0.3s;
+    /* Thêm 4 dòng này vào style.css để đồng bộ với cấu phần sidebar */
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    /* z-index: 1000; */
 }
 
 .sidebar h2 {
@@ -67,6 +73,8 @@ body {
 .main-content {
     flex: 1;
     padding: 30px;
+    /* THÊM DÒNG NÀY: Đẩy nội dung chính sang phải để không bị Sidebar che khuất */
+    margin-left: 260px;
 }
 
 header {
