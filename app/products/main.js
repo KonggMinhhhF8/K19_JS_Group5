@@ -12,13 +12,13 @@ import {
 }
     from "./componets/product.render.js";
 
-let products=[];
-let currentId=null;
+let products = [];
+let currentId = null;
 
 
 
 const modal = document.getElementById("productModal");
-function openModal(){
+function openModal() {
     currentId = null;
     modal.style.display = "flex";
 }
@@ -46,8 +46,8 @@ btnSave.addEventListener(
     saveProduct
 );
 
-async function loadProducts(){
-    products=
+async function loadProducts() {
+    products =
         await getProducts();
 
     renderProducts(
@@ -67,7 +67,7 @@ async function saveProduct() {
         await createProduct();
     }
 }
-async function createProduct(){
+async function createProduct() {
 
     const product = {
         categoryId:
@@ -86,7 +86,7 @@ async function createProduct(){
 
     console.log(product);
 
-    try{
+    try {
 
         await addProduct(product);
         await loadProducts();
@@ -94,7 +94,7 @@ async function createProduct(){
 
     }
 
-    catch(error){
+    catch (error) {
         console.log(error);
         alert(error.message);
 
@@ -102,7 +102,7 @@ async function createProduct(){
 
 }
 
-async function editProductData(){
+async function editProductData() {
 
     const product = {
 
@@ -119,7 +119,7 @@ async function editProductData(){
             Number(stockInput.value)
 
     };
-    await updateProduct(currentId,product);
+    await updateProduct(currentId, product);
     currentId = null;
 
     await loadProducts();
@@ -128,14 +128,14 @@ async function editProductData(){
 }
 
 
-window.editProduct = function(id){
+window.editProduct = function (id) {
     currentId = id;
 
     const product = products.find(
         p => p.id == id
     );
 
-    if(!product) return;
+    if (!product) return;
     nameInput.value =
         product.name;
     categoryInput.value =
@@ -149,15 +149,15 @@ window.editProduct = function(id){
 
 }
 
-window.removeProduct = async function(id){
+window.removeProduct = async function (id) {
     const ok = confirm("Bạn có chắc muốn xóa sản phẩm này?");
-    if(!ok) return;
-    try{
+    if (!ok) return;
+    try {
         await deleteProduct(id);
         await loadProducts();
         alert("Xóa thành công");
     }
-    catch(error){
+    catch (error) {
         alert(
             "Không thể xóa sản phẩm vì sản phẩm đang tồn tại trong đơn hàng."
         );
@@ -167,12 +167,31 @@ window.removeProduct = async function(id){
 };
 
 
-window.closeModal=function(){
-    modal.style.display="none";
+window.closeModal = function () {
+    modal.style.display = "none";
 }
 
-window.openModal=function() {
+window.openModal = function () {
     currentId = null;
     modal.style.display = "flex";
 
 };
+import { headers, renderTable, get } from './ulits/index.js'
+
+const init = async () => {
+    const products = await get('')
+    console.log(products)
+
+    const rows = products.map(product => ({
+        id: product.id,
+        name: product.name,
+        categoryId: product.category?.id,
+        categoryName: product.category?.name,
+        price: product.price,
+        remaining: product.remaining,
+        sku: product.sku
+    }))
+
+    await renderTable(headers, rows)
+}
+init()

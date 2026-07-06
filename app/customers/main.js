@@ -58,28 +58,28 @@ btnCancel.addEventListener(
 );
 
 
-async function loadCustomers(){
+async function loadCustomers() {
     customers = await getCustomers();
     renderCustomers(customers);
 }
 loadCustomers();
 
-async function saveCustomer(){
-    if(currentId){
+async function saveCustomer() {
+    if (currentId) {
         await editCustomerData();
     }
-    else{
+    else {
         await createCustomer();
     }
 }
 
 
-async function createCustomer(){
+async function createCustomer() {
     const customer = {
-        name:nameInput.value,
-        email:emailInput.value,
-        phone:phoneInput.value,
-        tier:tierInput.value
+        name: nameInput.value,
+        email: emailInput.value,
+        phone: phoneInput.value,
+        tier: tierInput.value
     };
 
 
@@ -90,12 +90,12 @@ async function createCustomer(){
 }
 
 
-async function editCustomerData(){
+async function editCustomerData() {
     const customer = {
-        name:nameInput.value,
-        email:emailInput.value,
-        phone:phoneInput.value,
-        tier:tierInput.value
+        name: nameInput.value,
+        email: emailInput.value,
+        phone: phoneInput.value,
+        tier: tierInput.value
 
     };
 
@@ -106,12 +106,12 @@ async function editCustomerData(){
 }
 
 
-window.editCustomer = function(id){
+window.editCustomer = function (id) {
 
     currentId = id;
 
     const customer = customers.find(c => c.id === id);
-    if(!customer) return;
+    if (!customer) return;
     nameInput.value = customer.name;
     emailInput.value = customer.email;
     phoneInput.value = customer.phone;
@@ -120,12 +120,20 @@ window.editCustomer = function(id){
 
 };
 
-window.removeCustomer = async function(id){
+window.removeCustomer = async function (id) {
     const ok = confirm("Bạn có chắc muốn xóa?");
-    if(!ok) return;
+    if (!ok) return;
     await deleteCustomer(id);
     await loadCustomers();
 };
-function closeModal(){
+function closeModal() {
     modal.style.display = "none";
 }
+import { headers, renderTable, get } from './ulits'
+
+const init = async () => {
+    const customers = await get('')
+
+    await renderTable(headers, customers)
+}
+init()
