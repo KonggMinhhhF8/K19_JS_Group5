@@ -36,7 +36,7 @@
     <main class="main-content">
       <header>
         <div class="search-bar">
-          <input type="text" id="searchInput" placeholder="Tìm tên sản phẩm, mã SKU...">
+          <input type="text" id="searchInput" onkeyup="searchProduct()" placeholder="Tìm tên sản phẩm, mã SKU...">
         </div>
         <div class="user-actions">
           <button id="btnAddProduct" class="btn-add">
@@ -167,15 +167,28 @@
         </div>
       </form>
     </div>
-  </div>
-  <<<<<<< HEAD <script type="module" src="./main.js">
+    <script type="module" src="./main.js">
     </script>
     <script src="/app/components/sidebar/sidebar.js"></script>
 </body>
-=======
 
 <script src="main.js" type="module"></script>
->>>>>>> feature/manage-list
+
+
+<script>
+  function searchProduct() {
+    const keyword = document.getElementById('searchInput').value.toLowerCase();
+
+    const rows = document.querySelectorAll('#productTableBody tr');
+
+    rows.forEach(row => {
+      const text = row.textContent.toLowerCase();
+      row.style.display = text.includes(keyword) ? '' : 'none';
+    });
+  }
+</script>
+
+>>>>>>> feature/search
 </body>
 
 </html>
