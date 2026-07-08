@@ -1,5 +1,5 @@
 import { orderDateInput, priceInput, amountInput, orderStatus, saveBtn, idInput, proInput, phoneInput, nameInput } from "../edit"
-import { put, post, del } from "../api"
+import { put, post, del } from "../../../api"
 
 const renderTable = async (headers, rows, className = null) => {
 

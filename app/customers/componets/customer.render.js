@@ -1,8 +1,4 @@
-export function renderCustomers(
-
-    customers
-
-){
+export function renderCustomers(customers){
 
     const table =
 
