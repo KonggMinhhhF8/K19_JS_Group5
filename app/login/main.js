@@ -11,7 +11,7 @@ const onLogin = async () => {
 
     localStorage.setItem("accessToken", accessToken)
     localStorage.setItem("refreshToken", refreshToken)
-    window.location.href = "http://127.0.0.1:5501/app/index.html"
+    window.location.href = "http://localhost:63342/K19_JS_Group5/app/index.html?_ijt=hqi2cv0k4o8qakupbq5u5oo0ba&_ij_reload=RELOAD_ON_SAVE"
 
 }
 

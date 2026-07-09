@@ -12,8 +12,8 @@ const setTokens = (accessToken, refreshToken) => {
 }
 
 if (!getToken()) {
-    localStorage.setItem('accessToken', 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJrMTgtc3RvcmUiLCJzdWIiOiIxIiwiZXhwIjoxNzgyOTYyOTY2LCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzgyOTYyMzY2LCJlbWFpbCI6ImJhbmd0eEB0ZXN0LmNvbSJ9.i2-1HkaWluYqE9c0ubkMaOBQJHJ5M-o5BGr0KQsFbSM')
-localStorage.setItem('refreshToken', 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJrMTgtc3RvcmUiLCJzdWIiOiIxIiwiZXhwIjoxNzgzNTY3MTY2LCJ0eXBlIjoicmVmcmVzaCIsImlhdCI6MTc4Mjk2MjM2Nn0.hiOsE6JbHGW23s5i2M1N6qbON4Mk9BAGD0OeOpnjdxs')
+    localStorage.setItem('accessToken', 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJrMTgtc3RvcmUiLCJzdWIiOiIxIiwiZXhwIjoxNzgzNjE1NTgwLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzgzNjE0OTgwLCJlbWFpbCI6ImJhbmd0eEB0ZXN0LmNvbSJ9.l6DfHQFYhRYl1kHl2mkcZHwaKV9JPereC6E7SAKbQtE')
+    localStorage.setItem('refreshToken', 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJrMTgtc3RvcmUiLCJzdWIiOiIxIiwiZXhwIjoxNzg0MjE5NzgwLCJ0eXBlIjoicmVmcmVzaCIsImlhdCI6MTc4MzYxNDk4MH0.5kwZ8OaQnlBu8fC8ZaKcyHtsC7wFcDC2qyhf0Qu61LQ')
 }
 
 const refreshAccessToken = async () => {
