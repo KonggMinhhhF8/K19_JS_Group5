@@ -137,3 +137,14 @@
 //     await renderTable(headers, customers)
 // }
 // init()
+
+
+import { headers, renderTable } from './ulits'
+import { get } from '../login/api.js'
+
+const init = async () => {
+    const customers = await get('customers')
+
+    await renderTable(headers, customers)
+}
+init()

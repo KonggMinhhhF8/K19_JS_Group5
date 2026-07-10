@@ -1,11 +1,11 @@
-// components/sidebar/sidebar.js
+// /sidebar/sidebar.js
 
 document.addEventListener("DOMContentLoaded", function () {
     const container = document.getElementById('sidebar-container');
 
     if (container) {
         // Sử dụng đường dẫn tuyệt đối bắt đầu bằng dấu /app/ (tính từ gốc Server của bạn)
-        fetch('/app/components/sidebar/sidebar.html')
+        fetch('/app/sidebar/sidebar.html')
             .then(response => {
                 if (!response.ok) throw new Error('Không thể tìm thấy file sidebar.html');
                 return response.text();

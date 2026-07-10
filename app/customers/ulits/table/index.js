@@ -1,5 +1,5 @@
 import {addressInput, mailInput, nameInput, phoneInput, saveBtn, rankStatus} from "../edit"
-import { put, post, del} from "login/api.js"
+import { put, post, del} from "../../../login/api.js"
 
 const renderTable = async (headers, rows, className = null) => {
 
