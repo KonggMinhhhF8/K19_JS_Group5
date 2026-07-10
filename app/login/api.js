@@ -80,6 +80,64 @@ const post = async (endpoint, body) => {
     }
 }
 
+const put = async (endpoint, body) => {
+    const accessToken = localStorage.getItem('accessToken')
+    if (!accessToken) {
+        alert('put data failed')
+        return
+    }
+
+    try {
+        const response = await fetch(`${API_URL}/${endpoint}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': `Bearer ${accessToken}`
+            },
+            body: JSON.stringify(body)
+        }
+        )
+
+        // if (response.status === 401) {
+        //     await getNewAccessToken()
+        //     return await post(endpoint, body)
+        // }
+
+        return await response.json()
+    } catch {
+        alert('get data failed')
+    }
+}
+
+const del = async (endpoint, body) => {
+    const accessToken = localStorage.getItem('accessToken')
+    if (!accessToken) {
+        alert('delete data failed')
+        return
+    }
+
+    try {
+        const response = await fetch(`${API_URL}/${endpoint}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': `Bearer ${accessToken}`
+            },
+            body: JSON.stringify(body)
+        }
+        )
+
+        // if (response.status === 401) {
+        //     await getNewAccessToken()
+        //     return await post(endpoint, body)
+        // }
+
+        return await response.json()
+    } catch {
+        alert('get data failed')
+    }
+}
+
 const get = async (endpoint) => {
     const accessToken = localStorage.getItem('accessToken')
     if (!accessToken) {
@@ -108,5 +166,5 @@ const get = async (endpoint) => {
 }
 
 export {
-    get, post, login
+    get, post, login, put, del
 }

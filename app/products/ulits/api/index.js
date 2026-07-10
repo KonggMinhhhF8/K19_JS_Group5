@@ -74,9 +74,36 @@ const request = async (endpoint, options = {}) => {
 
 }
 
+const get = async (endpoint) => {
+    const accessToken = localStorage.getItem('accessToken')
+    if (!accessToken) {
+        alert('get data failed')
+        return
+    }
+
+    try {
+        const response = await fetch(
+            `${API_URL}/${endpoint}`, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }
+        }
+        )
+
+        // if (response.status === 401) {
+        //     await getNewAccessToken()
+        //     return await get(endpoint)
+        // }
+
+        return await response.json()
+    } catch {
+        alert('get data failed')
+    }
+}
+
 
 const post = (endpoint, body) => request(endpoint, { method: "POST", body: JSON.stringify(body) })
-const get = (endpoint) => request(endpoint)
+// const get = (endpoint) => request(endpoint)
 const put = (endpoint, body) => request(endpoint, { method: "PUT", body: JSON.stringify(body) })
 const del = (endpoint) => request(endpoint, { method: "DELETE" })
 
