@@ -56,7 +56,7 @@
     }
 
     .sidebar ul li {
-      padding: 12px;
+      padding: 15px;
       cursor: pointer;
       border-radius: 8px;
       margin-bottom: 5px;
@@ -65,9 +65,11 @@
     }
 
     .sidebar ul li i {
-      margin-right: 15px;
+      margin-right: 12px;
+      width: 20px;
     }
 
+    .sidebar ul li:hover,
     .sidebar ul li.active {
       background: #34495e;
       color: var(--primary-color);
@@ -241,11 +243,8 @@
     /* Loại bỏ định dạng mặc định của thẻ a trong sidebar */
     .sidebar ul li a {
       text-decoration: none;
-      /* Bỏ gạch chân */
       color: inherit;
-      /* Ăn theo màu chữ của thẻ li cha */
       display: block;
-      /* Giúp người dùng bấm vào toàn bộ vùng của li chứ không chỉ mỗi chữ */
       width: 100%;
     }
   </style>

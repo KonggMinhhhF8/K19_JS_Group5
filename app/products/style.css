@@ -42,7 +42,6 @@ body {
     margin-bottom: 40px;
     text-align: center;
     color: var(--primary-color);
-    letter-spacing: 1px;
 }
 
 .sidebar ul {
@@ -73,7 +72,6 @@ body {
 .main-content {
     flex: 1;
     padding: 30px;
-    /* THÊM DÒNG NÀY: Đẩy nội dung chính sang phải để không bị Sidebar che khuất */
     margin-left: 260px;
 }
 
@@ -252,10 +250,7 @@ td {
 /* Loại bỏ định dạng mặc định của thẻ a trong sidebar */
 .sidebar ul li a {
     text-decoration: none;
-    /* Bỏ gạch chân */
     color: inherit;
-    /* Ăn theo màu chữ của thẻ li cha */
     display: block;
-    /* Giúp người dùng bấm vào toàn bộ vùng của li chứ không chỉ mỗi chữ */
     width: 100%;
 }
