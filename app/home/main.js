@@ -3,7 +3,7 @@ const init = async () => {
     const refreshToken = localStorage.getItem("refreshToken")
 
     if (!accessToken || !refreshToken) {
-        window.location.href = "http://localhost:63342/K19_JS_Group5/app/login/index.html?_ijt=hqi2cv0k4o8qakupbq5u5oo0ba&_ij_reload=RELOAD_ON_SAVE"
+        window.location.href = "./login/index.html"
     }
 
     try {

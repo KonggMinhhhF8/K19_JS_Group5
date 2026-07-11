@@ -12,7 +12,7 @@
 <body>
   <div class="container">
     <div id="sidebar-container"></div>
-    <!-- <aside class="sidebar">
+    <aside class="sidebar">
       <h2>ShopAdmin</h2>
       <ul>
         <li class="active">
@@ -31,7 +31,7 @@
           <a href="../reports/index.html"><i class="fas fa-chart-line"></i> Báo cáo</a>
         </li>
       </ul>
-    </aside> -->
+    </aside>
 
     <main class="main-content">
       <header>
@@ -170,22 +170,23 @@
   </div>
 
   <script src="main.js" type="module"></script>
-  <script src="/app/components/sidebar/sidebar.js"></script>
+  <!-- <script src="/app/components/sidebar/sidebar.js"></script> -->
 
 
-<script>
-  function searchProduct() {
-    const keyword = document.getElementById('searchInput').value.toLowerCase();
+  <script>
+    function searchProduct() {
+      const keyword = document.getElementById('searchInput').value.toLowerCase();
 
-    const rows = document.querySelectorAll('#productTableBody tr');
+      const rows = document.querySelectorAll('#productTableBody tr');
 
-    rows.forEach(row => {
-      const text = row.textContent.toLowerCase();
-      row.style.display = text.includes(keyword) ? '' : 'none';
-    });
-  }
-</script>
+      rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(keyword) ? '' : 'none';
+      });
+    }
+  </script>
 
 
 </body>
+
 </html>
