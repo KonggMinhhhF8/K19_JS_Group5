@@ -16,6 +16,7 @@ const init = async () => {
             }
         });
         const orders = await response.json();
+        console.log(orders)
 
         // =========================================================
         // TÍNH TỔNG DOANH THU
@@ -33,10 +34,14 @@ const init = async () => {
             }).format(totalRevenue);
         }
         // =========================================================
-        // ĐƠN MỚI
+        // ĐƠN MỚI HÔM NAY
 
-        const recent10Orders = orders.slice(0, 10);
-        const newOrdersCount = recent10Orders.length;
+        // Lấy ra chuỗi ngày hôm nay định dạng YYYY-MM-DD
+        const todayStr = new Date().toLocaleDateString('en-CA');
+
+        const todayOrders = orders.filter(order => order.date === todayStr);
+
+        const newOrdersCount = todayOrders.length;
 
         const newOrdersEl = document.querySelector("#stat-new-orders");
         if (newOrdersEl) {
@@ -60,7 +65,7 @@ const init = async () => {
                 return `
           <tr>
             <td>ORD-#${order.id}</td>
-            <td>${order.customer}</td>
+            <td>${order.customer.name}</td>
             <td><span class="status">${order.status}</span></td>
             <td>${formattedMoney}</td>
           </tr>
