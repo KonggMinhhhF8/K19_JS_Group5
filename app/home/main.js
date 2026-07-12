@@ -1,3 +1,4 @@
+import { get } from "../login/api.js"
 const init = async () => {
     const accessToken = localStorage.getItem("accessToken")
     const refreshToken = localStorage.getItem("refreshToken")
@@ -7,15 +8,8 @@ const init = async () => {
     }
 
     try {
-        // Gọi API lấy danh sách đơn hàng
-        const response = await fetch("https://wo365ovs53.execute-api.ap-southeast-1.amazonaws.com/orders", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${accessToken}`
-            }
-        });
-        const orders = await response.json();
+        // API lấy danh sách đơn hàng
+        const orders = await get("orders")
         console.log(orders)
 
         // =========================================================
@@ -64,6 +58,7 @@ const init = async () => {
 
                 return `
           <tr>
+            <td>${order.date}</td>
             <td>ORD-#${order.id}</td>
             <td>${order.customer.name}</td>
             <td><span class="status">${order.status}</span></td>
@@ -80,5 +75,18 @@ const init = async () => {
     }
 }
 init()
+
+const onLogout = () => {
+
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+
+    window.location.href = "./login/index.html"
+}
+
+const logoutButton = document.querySelector(".logout");
+if (logoutButton) {
+    logoutButton.addEventListener("click", onLogout);
+}
 
 
