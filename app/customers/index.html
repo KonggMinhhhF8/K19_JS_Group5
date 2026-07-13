@@ -536,59 +536,183 @@
   <input type="checkbox" id="modal-toggle" style="display:none">
 
   <!-- Modal thêm khách hàng -->
-  <div id="modal-overlay">
-
-    <div id="modal">
-      <div class="modal-header">
-        <h3>Thêm / Sửa khách hàng</h3>
-        <button type="button" class="modal-close" onclick="closeModal()">
-          &times;
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <label>Tên khách hàng</label>
-          <input id="name" placeholder="Nhập tên..." />
-        </div>
-        <div class="form-group">
-          <label>Email</label>
-          <input id="email" type="email" placeholder="example@email.com" />
-        </div>
-        <div class="form-group">
-          <label>Số điện thoại</label>
-          <input id="phone" type="tel" placeholder="0912 345 678" />
-        </div>
-        <div class="form-group">
-          <label>Địa chỉ</label>
-          <input id="address" placeholder="Nhập địa chỉ..." />
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Hạng</label>
-        <select id="tier">
-          <option value="silver">Silver</option>
-          <option value="gold">Gold</option>
-          <option value="platinum">Platinum</option>
-        </select>
-      </div>
+  <div id="modal"
+    style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center;">
+    <div style="background:white; padding:20px; border-radius:10px; width:300px;">
+      <h3>Thêm khách hàng</h3>
+      <input id="name" placeholder="Tên" style="width:100%; margin:5px 0; padding:8px;">
+      <input id="email" placeholder="Email" style="width:100%; margin:5px 0; padding:8px;">
+      <input id="phone" placeholder="SĐT" style="width:100%; margin:5px 0; padding:8px;">
+      <select id="tier" style="width:100%; margin:5px 0; padding:8px;">
+        <option value="gold">Vàng</option>
+        <option value="silver">Bạc</option>
+        <option value="bronze">Đồng</option>
+      </select>
 
 
-      <div class="modal-footer">
-        <button
-                id="btnCancel"
-                class="btn-cancel">
-          Hủy
-        </button>
-
-        <button
-                id="btnSaveCustomer"
-                class="btn-save">
-          Lưu
-        </button>
-
-      </div>
+      <button id="btnSaveCustomer">Lưu</button>
+      <button id="btnCancel">Hủy</button>
     </div>
   </div>
+
+
+  <script type="module" src="main.js"></script>
+
+  <!--  <script src="../sidebar/sidebar.js" type="module"></script>-->
+
+  <!--  <script type="module">-->
+  <!--    function openModal() {-->
+  <!--      document.getElementById('modal').style.display = 'flex'-->
+  <!--    }-->
+
+  <!--    function closeModal() {-->
+  <!--      document.getElementById('modal').style.display = 'none'-->
+  <!--    }-->
+
+  <!--    function addCustomer() {-->
+  <!--      const name = document.getElementById('name').value-->
+  <!--      const email = document.getElementById('email').value-->
+  <!--      const phone = document.getElementById('phone').value-->
+  <!--      const tier = document.getElementById('tier').value-->
+
+  <!--      if (!name || !email || !phone) {-->
+  <!--        alert("Vui lòng nhập đầy đủ")-->
+  <!--        return-->
+  <!--      }-->
+
+  <!--      const initials = name.split(' ').map(w => w[0]).join('').toUpperCase()-->
+
+  <!--      const tierText = {-->
+  <!--        gold: 'VÀNG',-->
+  <!--        silver: 'BẠC',-->
+  <!--        bronze: 'ĐỒNG'-->
+  <!--      }-->
+
+
+  <!--      if (editRow) {-->
+  <!--        editRow.innerHTML = `-->
+  <!--      <td>-->
+  <!--        <div class="cust-info">-->
+  <!--          <div class="avatar">${initials}</div>-->
+  <!--          <div>-->
+  <!--            <strong>${name}</strong><br>-->
+  <!--            <small>ID: ${editRow.querySelector('small').innerText}</small>-->
+  <!--          </div>-->
+  <!--        </div>-->
+  <!--      </td>-->
+  <!--      <td>${email}<br><small>${phone}</small></td>-->
+  <!--      <td><span class="tier ${tier}">${tierText[tier]}</span></td>-->
+  <!--      <td>${editRow.children[3].innerText}</td>-->
+  <!--      <td><strong>${editRow.children[4].innerText}</strong></td>-->
+  <!--      <td>-->
+  <!--        <button class="btn-action"><i class="fas fa-history"></i></button>-->
+  <!--        <button class="btn-action" onclick="editCustomer(this)">-->
+  <!--          <i class="fas fa-user-edit"></i>-->
+  <!--        </button>-->
+  <!--      </td>-->
+  <!--    `-->
+  <!--        editRow = null-->
+  <!--      } else {-->
+  <!--        const table = document.querySelector('tbody')-->
+
+  <!--        const row = `-->
+  <!--      <tr>-->
+  <!--        <td>-->
+  <!--          <div class="cust-info">-->
+  <!--            <div class="avatar">${initials}</div>-->
+  <!--            <div>-->
+  <!--              <strong>${name}</strong><br>-->
+  <!--              <small>ID: CUST-${Math.floor(Math.random() * 1000)}</small>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--        </td>-->
+  <!--        <td>${email}<br><small>${phone}</small></td>-->
+  <!--        <td><span class="tier ${tier}">${tierText[tier]}</span></td>-->
+  <!--        <td>0</td>-->
+  <!--        <td><strong>0đ</strong></td>-->
+  <!--        <td>-->
+  <!--          <button class="btn-action"><i class="fas fa-history"></i></button>-->
+  <!--          <button class="btn-action" onclick="editCustomer(this)">-->
+  <!--            <i class="fas fa-user-edit"></i>-->
+  <!--          </button>-->
+  <!--        </td>-->
+  <!--      </tr>-->
+  <!--    `-->
+  <!--        table.innerHTML += row-->
+  <!--      }-->
+
+  <!--      closeModal()-->
+  <!--    }-->
+
+
+
+
+
+  <!--    let editRow = null-->
+  <!--    function editCustomer(btn) {-->
+  <!--      editRow = btn.closest('tr')-->
+
+  <!--      const name = editRow.querySelector('strong').innerText-->
+  <!--      const email = editRow.children[1].childNodes[0].textContent.trim()-->
+  <!--      const phone = editRow.children[1].querySelector('small').innerText-->
+  <!--      const tier = editRow.querySelector('.tier').classList[1]-->
+
+  <!--      document.getElementById('name').value = name-->
+  <!--      document.getElementById('email').value = email-->
+  <!--      document.getElementById('phone').value = phone-->
+  <!--      document.getElementById('tier').value = tier-->
+  <!--      openModal()-->
+  <!--    }-->
+
+
+  <!--    function searchCustomer() {-->
+  <!--      const keyword = document.getElementById('search').value.toLowerCase()-->
+  <!--      const rows = document.querySelectorAll('tbody tr')-->
+
+  <!--      rows.forEach(row => {-->
+  <!--        const text = row.innerText.toLowerCase()-->
+  <!--        row.style.display = text.includes(keyword) ? '' : 'none'-->
+  <!--      })-->
+  <!--    }-->
+
+
+
+
+
+  <!--  </script>-->
+
+
+  <!--<div id="modal-overlay">-->
+
+  <!--  <div id="modal">modal-->
+  <!--    <div class="modal-header">-->
+  <!--      <h3>Thêm / Sửa khách hàng</h3>-->
+  <!--      <label for="popup-toggle" class="modal-close">&times;</label>-->
+  <!--    </div>-->
+  <!--    <div class="modal-body">-->
+  <!--      <div class="form-group">-->
+  <!--        <label>Tên khách hàng</label>-->
+  <!--        <input id="name" placeholder="Nhập tên..." />-->
+  <!--      </div>-->
+  <!--      <div class="form-group">-->
+  <!--        <label>Email</label>-->
+  <!--        <input id="email" type="email" placeholder="example@email.com" />-->
+  <!--      </div>-->
+  <!--      <div class="form-group">-->
+  <!--        <label>Số điện thoại</label>-->
+  <!--        <input id="phone" type="tel" placeholder="0912 345 678" />-->
+  <!--      </div>-->
+  <!--      <div class="form-group">-->
+  <!--        <label>Địa chỉ</label>-->
+  <!--        <input id="address" placeholder="Nhập địa chỉ..." />-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--    <div class="modal-footer">-->
+  <!--      <label for="popup-toggle" class="btn-cancel">Hủy</label>-->
+  <!--      <button id="save-btn" class="btn-save">Lưu</button>-->
+  <!--    </div>-->
+  <!--  </div>-->
+  <!--</div>-->
 
 
 

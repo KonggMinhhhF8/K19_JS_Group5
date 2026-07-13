@@ -1,7 +1,8 @@
-import { headers, renderTable, get } from './ulits/index.js'
+import { headers, renderTable } from './ulits'
+import { get } from '../login/api.js'
 
 const init = async () => {
-    const orders = await get('')
+    const orders = await get('orders')
     console.log(orders)
   
     const rows = orders.map(order => ({

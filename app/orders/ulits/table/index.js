@@ -1,5 +1,5 @@
 import { orderDateInput, priceInput, amountInput, orderStatus, saveBtn, idInput, proInput, phoneInput, nameInput } from "../edit"
-import { put, post, del } from "../../../api"
+import { put, post, del} from "../../../login/api.js"
 
 const renderTable = async (headers, rows, className = null) => {
 
@@ -94,10 +94,10 @@ const renderTable = async (headers, rows, className = null) => {
 
                     try {
                         if (id) {
-                            const result = await put(`${id}`, data);
+                            const result = await put(`orders/${id}`, data);
                             console.log( result)
                         } else {
-                            await post('', {...data, status: 'Active'});
+                            await post('orders', {...data, status: 'Active'});
                         }
 
                         document.querySelector('#modal-toggle').checked = false;
@@ -115,11 +115,11 @@ const renderTable = async (headers, rows, className = null) => {
             deleteBtn.style.cursor = 'pointer';
 
             deleteBtn.addEventListener('click', async () => {
-                const confirm = window.confirm(`Bạn có chắc muốn xóa "${row.name}" không?`);
+                const confirm = window.confirm(`Bạn có chắc muốn xóa đơn hàng "${row.id}" không?`);
                 if (!confirm) return;
 
                 try {
-                    const result = await del(`${row.id}`)
+                    const result = await del(`orders/${row.id}`)
 
                     if (result?.error || result?.message) {
                     alert(result.message || 'Không thể xóa sản phẩm này');

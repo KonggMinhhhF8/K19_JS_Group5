@@ -170,7 +170,7 @@ modalFooter.append(saveBtn, cancelLabel)
 modalContent.append(modalHeader, modalBody, modalFooter)
 overlay.append(modalContent)
 
-const checkbox = document.getElementById('modal-toggle') // lấy checkbox từ HTML
+const checkbox = document.getElementById('modal-toggle')
 document.body.append(overlay)
 
 export const resetForm = () => {
