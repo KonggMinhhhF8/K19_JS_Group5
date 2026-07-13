@@ -17,13 +17,9 @@ class="img-thumb"></td>
 SKU :
 ${product.sku || ''}
 </small>
-</td>
-
+</td
 
 <td>${product.category?.name || product.category || ''}</td>
-
-
-
 <td>${Number(product.price).toLocaleString()}
 đ
 </td>

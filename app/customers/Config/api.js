@@ -11,6 +11,25 @@ const setTokens = (accessToken, refreshToken) => {
     }
 };
 
+// ================== AUTH ==================
+export async function login(email, password) {
+    const response = await fetch(`${AUTH_URL}/login`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, password })
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+        throw new Error(data.message || "Email hoặc mật khẩu không đúng");
+    }
+
+    return data; // { accessToken, refreshToken }
+}
+
 async function refreshAccessToken() {
     const response = await fetch(`${AUTH_URL}/refresh-token`, {
         method: "POST",
@@ -28,14 +47,11 @@ async function refreshAccessToken() {
     }
 
     const data = await response.json();
-
     setTokens(data.accessToken, data.refreshToken);
-
     return data.accessToken;
 }
 
 async function request(endpoint = "", options = {}) {
-
     let token = getToken();
 
     let response = await fetch(`${BASE_URL}/${endpoint}`, {
@@ -47,12 +63,10 @@ async function request(endpoint = "", options = {}) {
         }
     });
 
-    let data = await response.json();
+    let data = await response.json().catch(() => ({}));
 
     if (response.status === 401 || data.message === "token expired") {
-
         token = await refreshAccessToken();
-
         response = await fetch(`${BASE_URL}/${endpoint}`, {
             ...options,
             headers: {
@@ -61,12 +75,11 @@ async function request(endpoint = "", options = {}) {
                 ...options.headers
             }
         });
-
-        data = await response.json();
+        data = await response.json().catch(() => ({}));
     }
 
     if (!response.ok) {
-        throw new Error(data.message);
+        throw new Error(data.message || "Đã có lỗi xảy ra");
     }
 
     return data;
