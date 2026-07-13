@@ -30,7 +30,8 @@ ${product.sku || ''}
 <td>${product.remaining ?? 0}</td>
 
 <td>
-<button onclick="editProduct('${product.id}')"
+
+<button onclick="window.location.href='create.html?id=${product.id}'"
                     style="
                         width:25px;
                         height:25px;

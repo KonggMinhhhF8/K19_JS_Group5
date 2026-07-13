@@ -1,4 +1,4 @@
-import { get, put } from '../api'
+import { get, put } from '../../Config/api.js'
 
 const container = document.createElement('div')
 container.className = 'container'
