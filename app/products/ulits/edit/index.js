@@ -1,4 +1,4 @@
-import { get, put } from '../api'
+import {put, get} from "../../../login/api.js"
 
 const container = document.createElement('div')
 container.className = 'container'
@@ -16,7 +16,6 @@ sidebar.innerHTML = `
     </ul>
 `
 
-// Main content
 const main = document.createElement('main')
 main.className = 'main-content'
 
@@ -28,8 +27,8 @@ backLink.href = '#'
 backLink.className = 'btn-back'
 backLink.innerHTML = '<i class="fas fa-arrow-left"></i> Quay lại danh sách'
 backLink.addEventListener('click', () => {
-            window.location.href = './index.html'
-        })
+    window.location.href = './index.html'
+})
 
 const pageTitle = document.createElement('h2')
 pageTitle.innerText = 'Chỉnh sửa sản phẩm'
@@ -90,14 +89,6 @@ priceLabel.innerText = 'Giá bán (VNĐ)'
 const priceInput = document.createElement('input')
 priceInput.type = 'number'
 priceGroup.append(priceLabel, priceInput)
-
-// const costGroup = document.createElement('div')
-// costGroup.className = 'form-group'
-// const costLabel = document.createElement('label')
-// costLabel.innerText = 'Giá vốn (VNĐ)'
-// const costInput = document.createElement('input')
-// costInput.type = 'number'
-// costGroup.append(costLabel, costInput)
 
 priceRow1.append(priceGroup)
 
@@ -181,9 +172,9 @@ categoryLabel.innerText = 'Danh mục'
 const categorySelect = document.createElement('select')
 
 const categoryOptions = [
-    { value: '11', text: 'Điện Thoại' },
-    { value: '12', text: 'Quần Áo' },
-    { value: '13', text: 'Giày Dép' }
+    {value: '11', text: 'Điện Thoại'},
+    {value: '12', text: 'Quần Áo'},
+    {value: '13', text: 'Giày Dép'}
 ]
 categoryOptions.forEach(cat => {
     const option = document.createElement('option')
@@ -193,32 +184,13 @@ categoryOptions.forEach(cat => {
 })
 categoryGroup.append(categoryLabel, categorySelect)
 
-// const statusGroup = document.createElement('div')
-// statusGroup.className = 'form-group'
-// const statusLabel = document.createElement('label')
-// statusLabel.innerText = 'Trạng thái'
-// const statusSelect = document.createElement('select')
-//
-// const statusOptions = [
-//     { value: 'active', text: 'Đang bán' },
-//     { value: 'discontinued', text: 'Ngừng kinh doanh' },
-//     { value: 'out_of_stock', text: 'Hết hàng' }
-// ]
-// statusOptions.forEach(s => {
-//     const option = document.createElement('option')
-//     option.value = s.value
-//     option.innerText = s.text
-//     statusSelect.append(option)
-// })
-// statusGroup.append(statusLabel, statusSelect)
-
 classifyCard.append(classifyTitle, categoryGroup)
 
 rightCol.append(imageCard, classifyCard)
 
 productGrid.append(leftCol, rightCol)
 
-// Footer
+
 const formFooter = document.createElement('div')
 formFooter.className = 'form-footer'
 
@@ -250,7 +222,8 @@ const fillForm = (product) => {
     saveBtn.dataset.id = product.id
 }
 
-// Thao tác lưu
+
+
 const params = new URLSearchParams(window.location.search)
 const productId = params.get('id')
 console.log('productId:', productId)
@@ -258,7 +231,7 @@ console.log('productId:', productId)
 const init = async () => {
     if (!productId) return
 
-    const product = await get(`${productId}`)
+    const product = await get(`products/${productId}`)
     fillForm(product)
 }
 
@@ -277,7 +250,7 @@ productForm.addEventListener('submit', async (e) => {
     }
 
     try {
-        await put(`${saveBtn.dataset.id}`, data)
+        await put(`products/${saveBtn.dataset.id}`, data)
         alert('Cập nhật thành công!')
         window.location.href = `./index.html`
     } catch (error) {
@@ -288,8 +261,8 @@ productForm.addEventListener('submit', async (e) => {
 
 
 cancelBtn.addEventListener('click', () => {
-            window.location.href = './index.html'
-        })
+    window.location.href = './index.html'
+})
 
 export {
     nameInput, descInput, priceInput, skuInput,

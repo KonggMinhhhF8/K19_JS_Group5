@@ -1,4 +1,4 @@
-import {del} from "../api"
+import {del} from "../../../login/api.js"
 
 const renderTable = async (headers, rows, className = null) => {
 

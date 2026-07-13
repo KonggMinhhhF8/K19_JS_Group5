@@ -82,9 +82,9 @@ const renderTable = async (headers, rows, className = null) => {
 
                 try {
                     if (id) {
-                        await put(`${id}`, data);
+                        await put(`customers/${id}`, data);
                     } else {
-                        await post('', {...data, status: 'Active'});
+                        await post('customers', {...data, status: 'Active'});
                     }
 
                     document.querySelector('#modal-toggle').checked = false;
@@ -106,7 +106,7 @@ const renderTable = async (headers, rows, className = null) => {
             if (!confirm) return;
 
             try {
-               const result = await del(`${row.id}`);
+               const result = await del(`customers/${row.id}`);
                console.log(result)
 
                 location.reload();

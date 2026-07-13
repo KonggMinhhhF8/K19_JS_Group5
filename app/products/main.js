@@ -176,10 +176,11 @@ window.openModal = function () {
     modal.style.display = "flex";
 
 };
-import { headers, renderTable, get } from './ulits/index.js'
+import { headers, renderTable } from './ulits'
+import { get } from '../login/api.js'
 
 const init = async () => {
-    const products = await get('')
+    const products = await get('products')
     console.log(products)
 
     const rows = products.map(product => ({
