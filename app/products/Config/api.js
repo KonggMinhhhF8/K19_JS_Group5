@@ -16,6 +16,16 @@ if (!getToken()) {
     localStorage.setItem("refreshToken", "REFRESH_TOKEN_MOI");
 }
 
+async function safeParseJSON(response) {
+    const text = await response.text();
+    if (!text) return {};
+    try {
+        return JSON.parse(text);
+    } catch {
+        return {};
+    }
+}
+
 async function refreshAccessToken() {
     const response = await fetch(`${AUTH_URL}/refresh-token`, {
         method: "POST",
@@ -52,7 +62,7 @@ async function request(endpoint = "", options = {}) {
         }
     });
 
-    let data = await response.json();
+    let data = await safeParseJSON(response);
     console.log("Status:", response.status);
     console.log("Response:", data);
 
@@ -69,7 +79,7 @@ async function request(endpoint = "", options = {}) {
             }
         });
 
-        data = await response.json();
+        data = await safeParseJSON(response);
     }
 
     if (!response.ok) {
