@@ -11,13 +11,14 @@
 
 <body>
   <div class="container">
+    <div id="sidebar-container"></div>
     <aside class="sidebar">
       <h2>ShopAdmin</h2>
       <ul>
-        <li class="active">
+        <li>
           <a href="../index.html"><i class="fas fa-home"></i> Tổng quan</a>
         </li>
-        <li>
+        <li class="active">
           <a href="./index.html"><i class="fas fa-box"></i> Sản phẩm</a>
         </li>
         <li>
@@ -35,10 +36,16 @@
     <main class="main-content">
       <header>
         <div class="search-bar">
-          <input type="text" id="searchInput" placeholder="Tìm tên sản phẩm, mã SKU...">
+          <input type="text" id="searchInput" onkeyup="searchProduct()" placeholder="Tìm tên sản phẩm, mã SKU...">
         </div>
         <div class="user-actions">
-          <button class="btn-add" onclick="toggleModal()"><i class="fas fa-plus"></i> Thêm sản phẩm</button>
+          <button id="btnAddProduct" class="btn-add">
+
+            <i class="fas fa-plus"></i>
+
+            Thêm sản phẩm
+
+          </button>
         </div>
       </header>
 
@@ -68,60 +75,131 @@
             </select>
           </div>
         </div>
+<!--        <table>-->
+<!--          <thead>-->
+<!--            <tr>-->
+<!--              <th>Hình</th>-->
+<!--              <th>Thông tin sản phẩm</th>-->
+<!--              <th>Danh mục</th>-->
+<!--              <th>Giá bán</th>-->
+<!--              <th>Tồn kho</th>-->
+<!--              <th>Thao tác</th>-->
+<!--            </tr>-->
+<!--          </thead>-->
+<!--          <tbody id="productTableBody"></tbody>-->
+<!--        </table>-->
+        <!--        <table>-->
+        <!--          <thead>-->
+        <!--            <tr>-->
+        <!--              <th>Hình</th>-->
+        <!--              <th>Thông tin sản phẩm</th>-->
+        <!--              <th>Danh mục</th>-->
+        <!--              <th>Giá bán</th>-->
+        <!--              <th>Tồn kho</th>-->
+        <!--              <th>Thao tác</th>-->
+        <!--            </tr>-->
+        <!--          </thead>-->
+        <!--          <tbody id="productTableBody">-->
+        <!--            <tr>-->
+        <!--              <td><img src="https://picsum.photos/50" alt="sp" class="img-thumb"></td>-->
+        <!--              <td><strong>iPhone 15 Pro</strong><br><small>SKU: IP15P-01</small></td>-->
+        <!--              <td>Điện thoại</td>-->
+        <!--              <td>28.900.000đ</td>-->
+        <!--              <td>45</td>-->
+        <!--              <td>-->
+        <!--                <button class="btn-icon edit"><i class="fas fa-edit"></i></button>-->
+        <!--                <button class="btn-icon delete"><i class="fas fa-trash"></i></button>-->
+        <!--              </td>-->
+        <!--            </tr>-->
+        <!--            <tr>-->
+        <!--              <td><img src="https://picsum.photos/51" alt="sp" class="img-thumb"></td>-->
+        <!--              <td><strong>Tai nghe AirPods Pro</strong><br><small>SKU: AP-02</small></td>-->
+        <!--              <td>Phụ kiện</td>-->
+        <!--              <td>5.500.000đ</td>-->
+        <!--              <td class="stock-low">3 (Cảnh báo)</td>-->
+        <!--              <td>-->
+        <!--                <button class="btn-icon edit"><i class="fas fa-edit"></i></button>-->
+        <!--                <button class="btn-icon delete"><i class="fas fa-trash"></i></button>-->
+        <!--              </td>-->
+        <!--            </tr>-->
+        <!--          </tbody>-->
+        <!--        </table>-->
         <table>
           <thead>
-            <tr>
-              <th>Hình</th>
-              <th>Thông tin sản phẩm</th>
-              <th>Danh mục</th>
-              <th>Giá bán</th>
-              <th>Tồn kho</th>
-              <th>Thao tác</th>
-            </tr>
+          <tr>
+            <th>Hình</th>
+            <th>Thông tin sản phẩm</th>
+            <th>Danh mục</th>
+            <th>Giá bán</th>
+            <th>Tồn kho</th>
+            <th>Thao tác</th>
+          </tr>
           </thead>
-          <tbody id="productTableBody">
-            <tr>
-              <td><img src="https://picsum.photos/50" alt="sp" class="img-thumb"></td>
-              <td><strong>iPhone 15 Pro</strong><br><small>SKU: IP15P-01</small></td>
-              <td>Điện thoại</td>
-              <td>28.900.000đ</td>
-              <td>45</td>
-              <td>
-                <button class="btn-icon edit"><i class="fas fa-edit"></i></button>
-                <button class="btn-icon delete"><i class="fas fa-trash"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td><img src="https://picsum.photos/51" alt="sp" class="img-thumb"></td>
-              <td><strong>Tai nghe AirPods Pro</strong><br><small>SKU: AP-02</small></td>
-              <td>Phụ kiện</td>
-              <td>5.500.000đ</td>
-              <td class="stock-low">3 (Cảnh báo)</td>
-              <td>
-                <button class="btn-icon edit"><i class="fas fa-edit"></i></button>
-                <button class="btn-icon delete"><i class="fas fa-trash"></i></button>
-              </td>
-            </tr>
-          </tbody>
+
+          <tbody id="productTableBody"></tbody>
+
         </table>
       </section>
+
     </main>
+
   </div>
 
   <div id="productModal" class="modal">
     <div class="modal-content">
       <h3>Thêm sản phẩm mới</h3>
       <form id="productForm">
-        <input type="text" placeholder="Tên sản phẩm" required>
-        <input type="text" placeholder="Giá bán" required>
-        <input type="number" placeholder="Số lượng tồn kho" required>
+        <input id="name" type="text" placeholder="Tên sản phẩm">
+        <input id="price" type="text" placeholder="Giá bán">
+        <input id="stock" type="number" placeholder="Số lượng tồn kho">
+        <select id="category">
+
+          <option value="11">
+            Điện Thoại
+          </option>
+
+          <option value="12">
+            Quần Áo
+          </option>
+
+          <option value="13">
+            Giày Dép
+          </option>
+
+        </select>
+        <input id="image" type="text" placeholder="Link ảnh">
         <div class="modal-buttons">
-          <button type="button" class="btn-cancel" onclick="toggleModal()">Hủy</button>
-          <button type="submit" class="btn-add">Lưu sản phẩm</button>
+          <button type="button" class="btn-cancel" onclick="closeModal()">
+
+            Hủy
+
+          </button>
+          <button id="btnSave" type="button" class="btn-add">
+            Lưu sản phẩm
+          </button>
         </div>
       </form>
     </div>
   </div>
+
+  <script src="main.js" type="module"></script>
+  <!-- <script src="/app/components/sidebar/sidebar.js"></script> -->
+
+
+  <script>
+    function searchProduct() {
+      const keyword = document.getElementById('searchInput').value.toLowerCase();
+
+      const rows = document.querySelectorAll('#productTableBody tr');
+
+      rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(keyword) ? '' : 'none';
+      });
+    }
+  </script>
+
+
 </body>
 
 </html>

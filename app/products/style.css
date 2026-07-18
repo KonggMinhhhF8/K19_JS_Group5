@@ -30,13 +30,18 @@ body {
     color: white;
     padding: 25px;
     transition: 0.3s;
+    /* Thêm 4 dòng này vào style.css để đồng bộ với cấu phần sidebar */
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    /* z-index: 1000; */
 }
 
 .sidebar h2 {
     margin-bottom: 40px;
     text-align: center;
     color: var(--primary-color);
-    letter-spacing: 1px;
 }
 
 .sidebar ul {
@@ -67,6 +72,7 @@ body {
 .main-content {
     flex: 1;
     padding: 30px;
+    margin-left: 260px;
 }
 
 header {
@@ -244,10 +250,7 @@ td {
 /* Loại bỏ định dạng mặc định của thẻ a trong sidebar */
 .sidebar ul li a {
     text-decoration: none;
-    /* Bỏ gạch chân */
     color: inherit;
-    /* Ăn theo màu chữ của thẻ li cha */
     display: block;
-    /* Giúp người dùng bấm vào toàn bộ vùng của li chứ không chỉ mỗi chữ */
     width: 100%;
 }
